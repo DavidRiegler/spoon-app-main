@@ -4,17 +4,50 @@ import { Link } from 'react-router-dom'
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle login logic here
-    console.log('Login attempt with:', { email, password })
+
+    // Basic validation
+    if (!email || !password) {
+      setErrorMessage('Please enter both email and password.')
+      return
+    }
+
+    setIsLoading(true) // Set loading state
+
+    try {
+      const response = await fetch('http://127.0.0.1:3000/api/auth/signup', {
+        method: 'POST',
+        mode: 'cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Login failed') // Handle API errors
+      }
+
+      const data = await response.json()
+      console.log('Login successful:', data) // Handle successful response (e.g., redirect)
+
+      // Handle successful login based on your backend API response
+    } catch (error) {
+      setErrorMessage('Login failed. Please check your credentials.') // Display error message
+    } finally {
+      setIsLoading(false) // Clear loading state
+    }
   }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#E57E60]">
       <div className="bg-[#FCF7F8] p-8 rounded-lg shadow-md w-96">
         <h1 className="text-2xl font-bold mb-6 text-center text-[#4E8098]">Login</h1>
+        {errorMessage && (
+          <div className="mb-4 text-red-500 text-center">{errorMessage}</div>
+        )}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-[#4E8098]">
@@ -46,9 +79,10 @@ export default function LoginPage() {
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-[#7C3B7C] rounded hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-[#7C3B7C] focus:ring-opacity-50"
+            disabled={isLoading}
+            className="w-full px-4 py-2 text-white bg-[#7C3B7C] rounded hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-[#7C3B7C] focus:ring-opacity-50 disabled:opacity-50"
           >
-            Login
+            {isLoading ? 'Logging in...' : 'Login'}
           </button>
         </form>
         <div className="mt-4 text-center">
