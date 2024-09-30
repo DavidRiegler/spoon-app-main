@@ -51,8 +51,8 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#E57E60]">
-      <div className="bg-[#FCF7F8] p-8 rounded-lg shadow-md w-96">
+    <div className="min-h-screen flex items-center justify-center bg-burnt">
+      <div className="bg-snow p-8 rounded-lg shadow-md w-96">
         <h1 className="text-2xl font-bold mb-6 text-center text-[#4E8098]">Register</h1>
         {errorMessage && (
           <div className="mb-4 text-red-500 text-center">{errorMessage}</div>
@@ -131,7 +131,7 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full px-4 py-2 text-white bg-[#7C3B7C] rounded hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-[#7C3B7C] focus:ring-opacity-50 disabled:opacity-50"
+            className="w-full px-4 py-2 text-white bg-lila rounded hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-lila focus:ring-opacity-50 disabled:opacity-50"
           >
             {isLoading ? 'Wird registriert...' : 'Registrieren'}
           </button>
