@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, Bell, Heart, FileText, Headphones, Menu, ShoppingCart, User, X, Search } from 'lucide-react'; 
+import { Home, Bell, Heart, FileText, Menu, ShoppingCart, User, X, Search, CreditCard, Phone, HelpCircle, Settings, LogOut } from 'lucide-react';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,7 +15,14 @@ const Navbar: React.FC = () => {
     { icon: Bell, label: 'Notifications' },
     { icon: Heart, label: 'Favorites' },
     { icon: FileText, label: 'Orders' },
-    { icon: Headphones, label: 'Support' },
+  ]
+
+  const profileItems = [
+    { icon: User, label: 'My Profile' },
+    { icon: CreditCard, label: 'Payment Methods' },
+    { icon: Phone, label: 'Contact Us' },
+    { icon: HelpCircle, label: 'Help & FAQs' },
+    { icon: Settings, label: 'Settings' },
   ]
 
   return (
@@ -25,10 +32,9 @@ const Navbar: React.FC = () => {
           <button onClick={toggleMenu} className="text-lila focus:outline-none mr-6">
             <Menu size={32} />
           </button>
-          <h1 className="text-2xl font-bold">Logo</h1>
+          <img src="src/assets/SpoonAppLogo.png" alt="Logo" className="h-10 hover:cursor-pointer" onClick={() => window.location.href = '/homepage'} />
         </div>
         
-        {/* Search Bar */}
         <div className="w-1/3 mx-4">
           <div className="relative">
             <input
@@ -52,7 +58,6 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Hamburger Menu */}
       <nav
         className={`fixed inset-y-0 left-0 transform ${
           isMenuOpen ? 'translate-x-0' : '-translate-x-full'
@@ -65,7 +70,7 @@ const Navbar: React.FC = () => {
           <ul className="space-y-4 mt-8">
             {menuItems.map(({ icon: Icon, label }) => (
               <li key={label}>
-                <a href={`/${label.toLowerCase()}`} className="flex items-center space-x-4 text-lg hover:text-[#7C3B7C]">
+                <a href={`/${label.toLowerCase()}`} className="text-lila flex items-center space-x-4 text-lg">
                   <Icon size={24}/>
                   <span>{label}</span>
                 </a>
@@ -75,35 +80,49 @@ const Navbar: React.FC = () => {
         </div>
       </nav>
 
-      {/* Shopping Cart Sidebar */}
       <div
         className={`fixed inset-y-0 right-0 transform ${
           isCartOpen ? 'translate-x-0' : 'translate-x-full'
         } w-64 bg-white shadow-lg transition-transform duration-300 ease-in-out z-30`}
       >
         <div className="p-6 bg-[#FCF7F8] h-full">
-          <button onClick={toggleCart} className="absolute top-4 right-4 text-[#4a3520] focus:outline-none">
+          <button onClick={toggleCart} className="absolute top-4 right-4 text-lila focus:outline-none">
             <X size={24} />
           </button>
-          <h2 className="text-xl font-bold mb-4">Your Cart</h2>
-          {/* Add cart items here */}
-          <p>Your cart is empty</p>
+          <h2 className="text-xl font-bold mb-4 text-lila">Your Cart</h2>
+          <p className="text-lila">Your cart is empty</p>
         </div>
       </div>
 
-      {/* Profile Sidebar */}
       <div
         className={`fixed inset-y-0 right-0 transform ${
           isProfileOpen ? 'translate-x-0' : 'translate-x-full'
-        } w-64 bg-white shadow-lg transition-transform duration-300 ease-in-out z-30`}
+        } w-64 bg-snow shadow-lg transition-transform duration-300 ease-in-out z-30`}
       >
-        <div className="p-6 bg-[#FCF7F8] h-full">
-          <button onClick={toggleProfile} className="absolute top-4 right-4 text-[#4a3520] focus:outline-none">
+        <div className="p-6 h-full flex flex-col">
+          <button onClick={toggleProfile} className="absolute top-4 right-4 text-lila focus:outline-none">
             <X size={24} />
           </button>
-          <h2 className="text-xl font-bold mb-4">Your Profile</h2>
-          {/* Add profile information here */}
-          <p>Welcome, User!</p>
+          <div className="flex items-center mb-6">
+            <div>
+              <h2 className="text-xl font-bold text-lila">John Smith</h2>
+              <p className="text-sm text-lila">Loremipsum@email.com</p>
+            </div>
+          </div>
+          <ul className="space-y-4 flex-grow">
+            {profileItems.map(({ icon: Icon, label }) => (
+              <li key={label}>
+                <a href={`/${label.toLowerCase().replace(/\s+/g, '-')}`} className="flex items-center space-x-4 text-lg text-lila hover:text-lila">
+                  <Icon size={24} className="text-lila" />
+                  <span>{label}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a href="/" className="flex items-center space-x-4 text-lg text-lila mt-auto">
+            <LogOut size={24} className="text-lila" />
+            <span>Log Out</span>
+          </a>
         </div>
       </div>
     </nav>
