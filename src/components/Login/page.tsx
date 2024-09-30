@@ -7,39 +7,37 @@ export default function LoginPage() {
   const [errorMessage, setErrorMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
 
-    // Basic validation
-    if (!email || !password) {
-      setErrorMessage('Please enter both email and password.')
-      return
-    }
-
-    setIsLoading(true) // Set loading state
+    const loginData = {
+      email: email,
+      password: password,
+    };
 
     try {
-      const response = await fetch('http://127.0.0.1:3000/api/auth/signup', {
-        method: 'POST',
-        mode: 'cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      })
+      const response = await fetch("http://127.0.0.1:3000/api/auth/signup", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(loginData),
+      });
 
-      if (!response.ok) {
-        throw new Error('Login failed') // Handle API errors
+      if (response.ok) {
+        const data = await response.json();
+        const token = data.token;
+        localStorage.setItem('authtoken', token)
+
+        window.location.href = '/HomePage'
+
+      } else {
+        const errorData = await response.json();
       }
-
-      const data = await response.json()
-      console.log('Login successful:', data) // Handle successful response (e.g., redirect)
-
-      // Handle successful login based on your backend API response
     } catch (error) {
-      setErrorMessage('Login failed. Please check your credentials.') // Display error message
-    } finally {
-      setIsLoading(false) // Clear loading state
     }
-  }
+  };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#E57E60]">

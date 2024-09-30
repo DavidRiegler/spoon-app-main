@@ -10,39 +10,41 @@ export default function RegisterPage() {
   const [errorMessage, setErrorMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
 
-    // Basic validation
-    if (!name || !surname || !username || !email || !password) {
-      setErrorMessage('Please fill in all fields.')
-      return
-    }
-
-    setIsLoading(true) // Set loading state
+    const registerData = {
+      name: name,
+      surname: surname,
+      username: username,
+      email: email,
+      password: password,
+    };
 
     try {
-      const response = await fetch('http://127.0.0.1:3000/api/auth', {
-        method: 'POST',
-        mode: 'cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, surname, username, email, password }),
-      })
+      const response = await fetch("http://127.0.0.1:3000/api/auth", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(registerData),
+      });
 
-      if (!response.ok) {
-        throw new Error('Registration failed') // Handle API errors
+      if (response.ok) {
+        const data = await response.json();
+        const token = data.token;
+        localStorage.setItem('authtoken', token)
+
+        window.location.href = '/HomePage'
+
+      } else {
+        const errorData = await response.json();
+        console.log(errorData)
       }
-
-      const data = await response.json()
-      console.log('Registration successful:', data) // Handle successful response (e.g., redirect)
-
-      // Handle successful registration based on your backend API response
     } catch (error) {
-      setErrorMessage('Registration failed. Please try again.') // Display error message
-    } finally {
-      setIsLoading(false) // Clear loading state
     }
-  }
+  };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#E57E60]">
