@@ -30,7 +30,7 @@ export default function LoginPage() {
         const data = await response.json();
         const token = data.token;
         localStorage.setItem('authtoken', token)
-        window.location.href = '/HomePage'
+        window.location.href = '/homepage'
       } else {
         const errorData = await response.json();
         setErrorMessage(errorData.message || 'Login failed. Please try again.');

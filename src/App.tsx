@@ -3,6 +3,7 @@ import LandingPage from './components/LandingPage/page'
 import LoginPage from './components/Login/page'
 import RegisterPage from './components/Register/page'
 import HomePage from './components/HomePage/page'
+import Overview from './components/HomepageComponents/BestSellers/overview'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/homepage" element={<HomePage />} />
+        <Route path="/overview" element={<Overview />} />
       </Routes>
     </Router>
   )

@@ -11,7 +11,7 @@ const Navbar: React.FC = () => {
   const toggleProfile = () => setIsProfileOpen(!isProfileOpen);
 
   const menuItems = [
-    { icon: Home, label: 'Home' },
+    { icon: Home, label: 'Homepage' },
     { icon: Bell, label: 'Notifications' },
     { icon: Heart, label: 'Favorites' },
     { icon: FileText, label: 'Orders' },
@@ -65,7 +65,7 @@ const Navbar: React.FC = () => {
           <ul className="space-y-4 mt-8">
             {menuItems.map(({ icon: Icon, label }) => (
               <li key={label}>
-                <a href="#" className="flex items-center space-x-4 text-lg hover:text-[#7C3B7C]">
+                <a href={`/${label.toLowerCase()}`} className="flex items-center space-x-4 text-lg hover:text-[#7C3B7C]">
                   <Icon size={24}/>
                   <span>{label}</span>
                 </a>
