@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, Bell, Heart, FileText, Headphones, Menu, ShoppingCart, User, X } from 'lucide-react'; 
+import { Home, Bell, Heart, FileText, Headphones, Menu, ShoppingCart, User, X, Search } from 'lucide-react'; 
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,11 +27,26 @@ const Navbar: React.FC = () => {
           </button>
           <h1 className="text-2xl font-bold">Logo</h1>
         </div>
+        
+        {/* Search Bar */}
+        <div className="w-1/3 mx-4">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="w-full py-2 px-4 pr-10 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lila"
+            />
+            <button className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-lila">
+              <Search size={20} />
+            </button>
+          </div>
+        </div>
+
         <div className="flex items-center space-x-6">
-          <button onClick={toggleCart} className="text-[#7C3B7C] focus:outline-none">
+          <button onClick={toggleCart} className="text-lila focus:outline-none">
             <ShoppingCart size={32} />
           </button>
-          <button onClick={toggleProfile} className="text-[#7C3B7C] focus:outline-none">
+          <button onClick={toggleProfile} className="text-lila focus:outline-none">
             <User size={32} />
           </button>
         </div>
