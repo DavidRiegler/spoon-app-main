@@ -10,18 +10,20 @@ export default function RegisterPage() {
   const [errorMessage, setErrorMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    const registerData = {
-      name: name,
-      surname: surname,
-      username: username,
-      email: email,
-      password: password,
-    };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setErrorMessage('');
 
     try {
+      const registerData = {
+        name: name,
+        surname: surname,
+        username: username,
+        email: email,
+        password: password,
+      };
+
       const response = await fetch("http://127.0.0.1:3000/api/auth", {
         method: "POST",
         headers: {
@@ -39,12 +41,14 @@ export default function RegisterPage() {
 
       } else {
         const errorData = await response.json();
-        console.log(errorData)
+        setErrorMessage(errorData.message || 'Registration failed. Please try again.');
       }
     } catch (error) {
+      setErrorMessage('An error occurred. Please try again later.');
+    } finally {
+      setIsLoading(false);
     }
   };
-
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#E57E60]">
@@ -129,7 +133,7 @@ export default function RegisterPage() {
             disabled={isLoading}
             className="w-full px-4 py-2 text-white bg-[#7C3B7C] rounded hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-[#7C3B7C] focus:ring-opacity-50 disabled:opacity-50"
           >
-            {isLoading ? 'Registering...' : 'Register'}
+            {isLoading ? 'Wird registriert...' : 'Registrieren'}
           </button>
         </form>
         <div className="mt-4 text-center">

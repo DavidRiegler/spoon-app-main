@@ -9,6 +9,8 @@ export default function LoginPage() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    setIsLoading(true);
+    setErrorMessage('');
 
     const loginData = {
       email: email,
@@ -28,16 +30,17 @@ export default function LoginPage() {
         const data = await response.json();
         const token = data.token;
         localStorage.setItem('authtoken', token)
-
         window.location.href = '/HomePage'
-
       } else {
         const errorData = await response.json();
+        setErrorMessage(errorData.message || 'Login failed. Please try again.');
       }
     } catch (error) {
+      setErrorMessage('An error occurred. Please try again later.');
+    } finally {
+      setIsLoading(false);
     }
   };
-
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#E57E60]">
