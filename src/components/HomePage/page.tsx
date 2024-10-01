@@ -8,7 +8,7 @@ const HomePage: React.FC = () => {
   return (
     <div className="homepage bg-vanilla min-h-screen h-[130vh]">
       <Navbar />
-      <main className="container mx-auto mt-10 mb-10">
+      <main className="mx-auto mt-10 mb-10 ml-20 mr-20">
         <Categories />
         <div className="my-8 border-b-2 border-lila"></div>
         <Bestsellers />
