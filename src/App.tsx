@@ -3,7 +3,7 @@ import LandingPage from './components/LandingPage/page'
 import LoginPage from './components/Login/page'
 import RegisterPage from './components/Register/page'
 import HomePage from './components/HomePage/page'
-import Overview from './components/HomepageComponents/BestSellers/overview'
+import Overview from './components/HomePage/components/BestSellers/overview'
 
 function App() {
   return (

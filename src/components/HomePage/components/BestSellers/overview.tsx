@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Navbar from '../Navbar/page'
+import Navbar from '../../../Navbar/page'
 import { Star, ShoppingCart, ChevronLeft } from 'lucide-react'
 
 const allItems = [

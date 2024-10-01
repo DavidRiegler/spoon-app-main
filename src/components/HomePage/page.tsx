@@ -1,8 +1,8 @@
 import React from 'react';
-import Navbar from '../HomepageComponents/Navbar/page';
-import Categories from '../HomepageComponents/Categories/page';
-import Bestsellers from '../HomepageComponents/BestSellers/page';
-import Recommended from '../HomepageComponents/Recommended/page';
+import Navbar from '../Navbar/page';
+import Categories from './components/Categories/page';
+import Bestsellers from './components/BestSellers/page';
+import Recommended from './components/Recommended/page';
 
 const HomePage: React.FC = () => {
   return (
