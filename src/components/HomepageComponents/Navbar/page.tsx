@@ -1,8 +1,9 @@
+"use client"
+
 import { useState } from 'react'
-import { Home, Bell, Heart, FileText, Menu, ShoppingCart, User, X, Search, CreditCard, Phone, HelpCircle, Settings, LogOut, Plus, Minus, Trash2 } from 'lucide-react'
+import { ShoppingCart, User, X, Search, CreditCard, Phone, HelpCircle, Settings, LogOut, Plus, Minus, Trash2 } from 'lucide-react'
 
 export default function Component() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isProfileOpen, setIsProfileOpen] = useState(false)
   const [cartItems, setCartItems] = useState([
@@ -10,16 +11,8 @@ export default function Component() {
     { id: 2, name: 'Product 2', price: 29.99, quantity: 2 },
   ])
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
   const toggleCart = () => setIsCartOpen(!isCartOpen)
   const toggleProfile = () => setIsProfileOpen(!isProfileOpen)
-
-  const menuItems = [
-    { icon: Home, label: 'Homepage' },
-    { icon: Bell, label: 'Notifications' },
-    { icon: Heart, label: 'Favorites' },
-    { icon: FileText, label: 'Orders' },
-  ]
 
   const profileItems = [
     { icon: User, label: 'My Profile' },
@@ -46,73 +39,63 @@ export default function Component() {
   const delivery = 5.99 // Fixed delivery fee
   const total = subtotal + taxAndFees + delivery
 
+  const tabs = [
+    { name: 'Homepage', href: '/homepage' },
+    { name: 'Socials', href: '/socials' },
+    { name: 'Food', href: '/food' },
+    { name: 'Dating', href: '/dating' },
+    { name: 'Quiz', href: '/quiz' },
+  ]
+
   return (
-    <nav className="bg-snow shadow-md">
-      <div className="px-6 py-4 flex justify-between items-center">
-        <div className="flex items-center">
-          <button className="mr-6 text-lila" onClick={toggleMenu}>
-            <Menu className="h-6 w-6" />
-            <span className="sr-only">Toggle menu</span>
-          </button>
-          <img
-            src="src/assets/SpoonAppLogo.png"
-            alt="Logo"
-            className="h-10 w-auto cursor-pointer"
-            onClick={() => window.location.href = '/homepage'}
-          />
-        </div>
-        <div className="w-1/3 mx-4">
-          <div className="relative">
-            <input
-              className="w-full py-2 px-4 pr-10 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#4a3520]"
-              placeholder="Search..."
-              type="search"
+    <div className="flex flex-col">
+      <nav className="bg-snow shadow-md">
+        <div className="px-6 py-4 flex justify-between items-center">
+          <div className="flex items-center">
+            <img
+              src="src/assets/SpoonAppLogo.png?height=40&width=40"
+              alt="Logo"
+              className="h-10 w-auto cursor-pointer"
+              onClick={() => window.location.href = '/homepage'}
             />
-            <button
-              className="absolute right-1 top-1/2 -translate-y-1/2 text-gray-400 hover:text-lila">
-              <Search className="h-4 w-4" />
-              <span className="sr-only">Search</span>
+          </div>
+          <div className="w-1/3 mx-4">
+            <div className="relative">
+              <input
+                className="w-full py-2 px-4 pr-10 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#4a3520]"
+                placeholder="Search..."
+                type="search"
+              />
+              <button
+                className="absolute right-1 top-1/2 -translate-y-1/2 text-gray-400 hover:text-lila">
+                <Search className="h-4 w-4" />
+                <span className="sr-only">Search</span>
+              </button>
+            </div>
+          </div>
+          <div className="flex items-center space-x-6">
+            <button className="text-lila" onClick={toggleCart}>
+              <ShoppingCart className="h-6 w-6" />
+              <span className="sr-only">Toggle cart</span>
+            </button>
+            <button className="text-lila" onClick={toggleProfile}>
+              <User className="h-6 w-6" />
+              <span className="sr-only">Toggle profile</span>
             </button>
           </div>
         </div>
-        <div className="flex items-center space-x-6">
-          <button className="text-lila" onClick={toggleCart}>
-            <ShoppingCart className="h-6 w-6" />
-            <span className="sr-only">Toggle cart</span>
-          </button>
-          <button className="text-lila" onClick={toggleProfile}>
-            <User className="h-6 w-6" />
-            <span className="sr-only">Toggle profile</span>
-          </button>
-        </div>
-      </div>
-      <div
-        className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg transition-transform duration-300 ease-in-out z-20 ${
-          isMenuOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-      >
-        <div className="p-6 bg-[#FCF7F8] h-full">
-          <button
-            className="absolute top-4 right-4 text-lila"
-            onClick={toggleMenu}
+      </nav>
+      <div className="flex bg-snow px-2 -mr-1">
+        {tabs.map((tab) => (
+          <a
+            key={tab.name}
+            href={tab.href}
+            className="relative px-4 py-2 text-xl font-bold text-snow bg-lila hover:bg-burnt rounded-t-lg mr-1 transition-colors duration-200 w-1/5 text-center"
           >
-            <X className="h-6 w-6" />
-            <span className="sr-only">Close menu</span>
-          </button>
-          <ul className="space-y-4 mt-8">
-            {menuItems.map(({ icon: Icon, label }) => (
-              <li key={label}>
-                <a
-                  className="text-lila flex items-center space-x-4 text-lg"
-                  href={`/${label.toLowerCase()}`}
-                >
-                  <Icon className="h-6 w-6" />
-                  <span>{label}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+            {tab.name}
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-lila transform scale-x-0 transition-transform duration-200 group-hover:scale-x-100" />
+          </a>
+        ))}
       </div>
       <div
         className={`fixed inset-y-0 right-0 w-64 bg-white shadow-lg transition-transform duration-300 ease-in-out z-30 ${
@@ -231,6 +214,6 @@ export default function Component() {
           </a>
         </div>
       </div>
-    </nav>
+    </div>
   )
 }

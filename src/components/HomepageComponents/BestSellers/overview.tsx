@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Navbar from '../Navbar/page'
-import { Star, ShoppingCart } from 'lucide-react'
+import { Star, ShoppingCart, ChevronLeft } from 'lucide-react'
 
 const allItems = [
   { id: 1, name: 'Sushi Platter', price: 103.0, rating: 4.8, image: 'src/assets/PlaceholderPic.jpg', description: 'Fresh sushi assortment...' },
@@ -24,7 +24,12 @@ export default function Overview() {
     <div className='bg-vanilla min-h-screen'>
       <Navbar />
       <div className="mx-auto px-4 py-8 ml-20 mr-20">
-        <h1 className="text-3xl font-bold mb-6 text-burnt">Best Sellers</h1>
+        <div className='flex items-center mb-8'>
+          <a href="/homepage" className="flex items-center">
+            <ChevronLeft className="w-10 h-10 text-burnt" />
+            <h1 className="text-3xl font-bold text-burnt ml-2">Best Sellers</h1>
+          </a>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {allItems.map((item) => (
             <div key={item.id} className="bg-white rounded-3xl shadow-lg overflow-hidden">
