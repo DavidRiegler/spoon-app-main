@@ -8,7 +8,7 @@ export default function Socials() {
     {
       id: 1,
       username: 'fcbayern',
-      userImg: '/placeholder.svg?height=48&width=48&text=FCB',
+      userImg: 'src/assets/on-boarding/Pizza.jpg?height=48&width=48&text=FCB',
       img: 'src/assets/on-boarding/delivery.jpg?height=600&width=338&text=Soccer+Video',
       caption: 'supercharge_beast • Original audio',
       isVideo: true,
