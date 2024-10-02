@@ -59,7 +59,7 @@ export default function StoryView({ stories, initialStoryIndex, onClose }: Story
         <img
           src={currentStory.img}
           alt={currentStory.username}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
         />
         <div className="absolute top-0 left-0 right-0 h-1 bg-gray-800">
           <div
@@ -72,7 +72,7 @@ export default function StoryView({ stories, initialStoryIndex, onClose }: Story
             <img
               src={currentStory.userImg}
               alt={currentStory.username}
-              className="w-8 h-8 rounded-full border-2 border-white"
+              className="w-12 h-12 rounded-full border-2 border-white object-cover"
             />
             <span className="text-white font-semibold">{currentStory.username}</span>
           </div>

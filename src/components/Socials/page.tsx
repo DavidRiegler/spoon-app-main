@@ -29,7 +29,7 @@ export default function Socials() {
   return (
     <div className='min-h-screen'>
         <Navbar />
-        <div className="bg-white text-black">
+        <div className="bg-snow text-black">
             <Sidebar />
             <main className="flex-grow">
                 <div className="max-w-[630px] mx-auto">

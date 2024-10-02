@@ -40,7 +40,7 @@ export default function Post({ id, username, userImg, img, caption }: PostProps)
               )}
             </button>
             <ChatBubbleOvalLeftIcon className="btn" />
-            <PaperAirplaneIcon className="btn rotate-45" />
+            <PaperAirplaneIcon className="btn -rotate-45" />
           </div>
           <BookmarkIcon className="btn" />
         </div>
