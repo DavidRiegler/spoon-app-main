@@ -13,11 +13,25 @@ export default function RegisterPage() {
   const [dateOfBirth, setDateOfBirth] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [passwordError, setPasswordError] = useState('') 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsLoading(true)
     setErrorMessage('')
+    setPasswordError('') 
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])/;
+    if (password.length < 6) { 
+      setPasswordError('Password must be at least 6 characters long.')
+      setIsLoading(false)
+      return; 
+    }
+    if (!passwordRegex.test(password)) {
+      setPasswordError('Password must contain at least one uppercase letter, one lowercase letter, one special character, and one number.')
+      setIsLoading(false)
+      return; 
+    }
 
     try {
       const registerData = {
@@ -136,6 +150,9 @@ export default function RegisterPage() {
                 className="w-full px-3 py-2 bg-snow border border-lila rounded-md text-sm shadow-sm placeholder-gray-400
                   focus:outline-none focus:border-lila focus:ring-1 focus:ring-lila"
               />
+              {passwordError && ( 
+                <div className="mt-1 text-red-500">{passwordError}</div>
+              )}
             </div>
             <div>
               <label htmlFor="mobileNumber" className="block text-sm font-medium text-lila mb-1">

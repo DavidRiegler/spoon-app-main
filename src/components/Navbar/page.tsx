@@ -1,18 +1,50 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ShoppingCart, User, X, Search, CreditCard, Phone, HelpCircle, Settings, LogOut, Plus, Minus, Trash2 } from 'lucide-react'
 
 export default function Component() {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isProfileOpen, setIsProfileOpen] = useState(false)
-  const [cartItems, setCartItems] = useState([
-    { id: 1, name: 'Product 1', price: 19.99, quantity: 1 },
-    { id: 2, name: 'Product 2', price: 29.99, quantity: 2 },
-  ])
+  const [cartItems, setCartItems] = useState<any[]>([])
 
   const toggleCart = () => setIsCartOpen(!isCartOpen)
-  const toggleProfile = () => setIsProfileOpen(!isProfileOpen)
+
+  useEffect(() => {
+    const storedCartItems = JSON.parse(localStorage.getItem('cartItems') || '[]')
+    setCartItems(storedCartItems)
+
+    const handleStorageChange = () => {
+      const updatedCartItems = JSON.parse(localStorage.getItem('cartItems') || '[]')
+      setCartItems(updatedCartItems)
+    }
+
+    window.addEventListener('storage', handleStorageChange)
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange)
+    }
+  }, [])
+
+  const updateQuantity = (id: number, change: number) => {
+    const updatedCartItems = cartItems.map(item =>
+      item.id === id ? { ...item, quantity: Math.max(0, item.quantity + change) } : item
+    ).filter(item => item.quantity > 0)
+    
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems))
+    setCartItems(updatedCartItems)
+  }
+
+  const removeItem = (id: number) => {
+    const updatedCartItems = cartItems.filter(item => item.id !== id)
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems))
+    setCartItems(updatedCartItems)
+  }
+
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const taxAndFees = subtotal * 0.1 // Assuming 10% tax and fees
+  const delivery = 5.99 // Fixed delivery fee
+  const total = subtotal + taxAndFees + delivery
 
   const profileItems = [
     { icon: User, label: 'My Profile' },
@@ -22,23 +54,6 @@ export default function Component() {
     { icon: Settings, label: 'Settings' },
   ]
 
-  const updateQuantity = (id: number, change: number) => {
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id ? { ...item, quantity: Math.max(0, item.quantity + change) } : item
-      ).filter(item => item.quantity > 0)
-    )
-  }
-
-  const removeItem = (id: number) => {
-    setCartItems(items => items.filter(item => item.id !== id))
-  }
-
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-  const taxAndFees = subtotal * 0.1 // Assuming 10% tax and fees
-  const delivery = 5.99 // Fixed delivery fee
-  const total = subtotal + taxAndFees + delivery
-
   const tabs = [
     { name: 'Homepage', href: '/homepage' },
     { name: 'Socials', href: '/socials' },
@@ -46,6 +61,8 @@ export default function Component() {
     { name: 'Dating', href: '/dating' },
     { name: 'Quiz', href: '/quiz' },
   ]
+
+  const toggleProfile = () => setIsProfileOpen(!isProfileOpen)
 
   const userDataString = localStorage.getItem('userData');
   const user = userDataString ? JSON.parse(userDataString).user : { name: "", surname: "", email: "" };

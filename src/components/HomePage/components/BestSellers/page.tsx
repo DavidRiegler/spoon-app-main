@@ -1,5 +1,3 @@
-'use client'
-
 import { useState, useRef, useEffect } from 'react'
 import { Star, ChevronRight, ChevronLeft, ShoppingCart } from 'lucide-react'
 import { motion } from 'framer-motion'
@@ -51,6 +49,20 @@ export default function BestSellers() {
     setCurrentIndex(prev => (prev - itemsPerPage + bestSellers.length) % bestSellers.length)
   }
 
+  const addToCart = (item: { id: number; name: string; price: number; quantity: number }) => {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+    const existingItemIndex = cartItems.findIndex((i: any) => i.id === item.id);
+
+    if (existingItemIndex > -1) {
+      cartItems[existingItemIndex].quantity += 1;
+    } else {
+      cartItems.push(item);
+    }
+
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    window.dispatchEvent(new Event('storage')); 
+  }
+
   return (
     <div className="mb-8 relative">
       <h3 className="text-2xl font-bold mb-4 flex justify-between items-center text-burnt">
@@ -81,8 +93,9 @@ export default function BestSellers() {
                 </button>
                 <div className="p-4">
                   <div className="flex justify-center items-center mb-2">
-                    <button className="bg-burnt rounded-full p-2 hover:bg-orange-500"
-                      
+                    <button 
+                      className="bg-burnt rounded-full p-2 hover:bg-orange-500"
+                      onClick={() => addToCart({ ...item, quantity: 1 })}
                     >
                       <ShoppingCart className="w-5 h-5 text-white" />
                     </button>

@@ -11,6 +11,20 @@ const allItems = [
   { id: 6, name: 'Vegetable Spring Rolls', price: 25.0, rating: 4.9, image: 'src/assets/on-boarding/Pizza.jpg', description: 'Crispy rolls with veggies...' },
 ]
 
+const addToCart = (item: { id: number; name: string; price: number; quantity: number }) => {
+  const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+  const existingItemIndex = cartItems.findIndex((i: any) => i.id === item.id);
+
+  if (existingItemIndex > -1) {
+    cartItems[existingItemIndex].quantity += 1;
+  } else {
+    cartItems.push(item);
+  }
+
+  localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  window.dispatchEvent(new Event('storage')); 
+}
+
 export default function Overview() {
   const [favorites, setFavorites] = useState<number[]>([])
 
@@ -55,11 +69,12 @@ export default function Overview() {
                     <Star className="w-5 h-5 text-yellow-400 fill-current" />
                     <span className="ml-1 text-sm font-bold text-orange-500">{item.rating.toFixed(1)}</span>
                   </div>
-                  <button
-                    className="bg-burnt rounded-full p-2 hover:bg-orange-500"
-                  >
-                    <ShoppingCart className="w-5 h-5 text-white" />
-                  </button>
+                  <button 
+                      className="bg-burnt rounded-full p-2 hover:bg-orange-500"
+                      onClick={() => addToCart({ ...item, quantity: 1 })}
+                    >
+                      <ShoppingCart className="w-5 h-5 text-white" />
+                    </button>
                 </div>
                 <p className="text-gray-600 text-sm mb-4">{item.description}</p>
               </div>
