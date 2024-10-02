@@ -3,12 +3,12 @@ import Navbar from '../../../Navbar/page'
 import { Star, ShoppingCart, ChevronLeft } from 'lucide-react'
 
 const allItems = [
-  { id: 1, name: 'Sushi Platter', price: 103.0, rating: 4.8, image: 'src/assets/PlaceholderPic.jpg', description: 'Fresh sushi assortment...' },
-  { id: 2, name: 'Chicken Stir Fry', price: 50.0, rating: 4.5, image: 'src/assets/PlaceholderPic.jpg', description: 'Savory chicken and vegetables...' },
-  { id: 3, name: 'Vegetable Lasagna', price: 12.99, rating: 4.2, image: 'src/assets/PlaceholderPic.jpg', description: 'Layers of pasta and veggies...' },
-  { id: 4, name: 'Berry Cupcake', price: 8.20, rating: 4.7, image: 'src/assets/PlaceholderPic.jpg', description: 'Sweet cupcake with berries...' },
-  { id: 5, name: 'Classic Burger', price: 10.0, rating: 5.0, image: 'src/assets/PlaceholderPic.jpg', description: 'Juicy beef patty with toppings...' },
-  { id: 6, name: 'Vegetable Spring Rolls', price: 25.0, rating: 4.9, image: 'src/assets/PlaceholderPic.jpg', description: 'Crispy rolls with veggies...' },
+  { id: 1, name: 'Sushi Platter', price: 103.0, rating: 4.8, image: 'src/assets/on-boarding/Pizza.jpg', description: 'Fresh sushi assortment...' },
+  { id: 2, name: 'Chicken Stir Fry', price: 50.0, rating: 4.5, image: 'src/assets/on-boarding/Pizza.jpg', description: 'Savory chicken and vegetables...' },
+  { id: 3, name: 'Vegetable Lasagna', price: 12.99, rating: 4.2, image: 'src/assets/on-boarding/Pizza.jpg', description: 'Layers of pasta and veggies...' },
+  { id: 4, name: 'Berry Cupcake', price: 8.20, rating: 4.7, image: 'src/assets/on-boarding/Pizza.jpg', description: 'Sweet cupcake with berries...' },
+  { id: 5, name: 'Classic Burger', price: 10.0, rating: 5.0, image: 'src/assets/on-boarding/Pizza.jpg', description: 'Juicy beef patty with toppings...' },
+  { id: 6, name: 'Vegetable Spring Rolls', price: 25.0, rating: 4.9, image: 'src/assets/on-boarding/Pizza.jpg', description: 'Crispy rolls with veggies...' },
 ]
 
 export default function Overview() {

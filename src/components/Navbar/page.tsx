@@ -47,6 +47,9 @@ export default function Component() {
     { name: 'Quiz', href: '/quiz' },
   ]
 
+  const userDataString = localStorage.getItem('userData');
+  const user = userDataString ? JSON.parse(userDataString).user : { name: "", surname: "", email: "" };
+
   return (
     <div className="flex flex-col">
       <nav className="bg-snow shadow-md">
@@ -191,8 +194,8 @@ export default function Component() {
           </button>
           <div className="flex items-center mb-6">
             <div>
-              <h2 className="text-xl font-bold text-lila">John Smith</h2>
-              <p className="text-sm text-lila">Loremipsum@email.com</p>
+              <h2 className="text-xl font-bold text-lila">{user.name || 'Guest'} {user.surname || ''}</h2>
+              <p className="text-sm text-lila">{user.email || 'No email available'}</p>
             </div>
           </div>
           <ul className="space-y-4 flex-grow">
@@ -208,7 +211,7 @@ export default function Component() {
               </li>
             ))}
           </ul>
-          <a className="flex items-center space-x-4 text-lg text-lila mt-auto" href="/">
+          <a className="flex items-center space-x-4 text-lg text-lila mt-auto" href="/" onClick={() => { localStorage.clear(); }}>
             <LogOut className="h-6 w-6" />
             <span>Log Out</span>
           </a>

@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Star } from 'lucide-react';
 
 const recommendedItems = [
-  { id: 1, name: 'Classic Burger', price: 10.0, rating: 5.0, image: 'src/assets/PlaceholderPic.jpg' },
-  { id: 2, name: 'Vegetable Spring Rolls', price: 25.0, rating: 5.0, image: 'src/assets/PlaceholderPic.jpg' },
+  { id: 1, name: 'Classic Burger', price: 10.0, rating: 5.0, image: 'src/assets/on-boarding/Pizza.jpg' },
+  { id: 2, name: 'Vegetable Spring Rolls', price: 25.0, rating: 5.0, image: 'src/assets/on-boarding/Pizza.jpg' },
 ];
 
 export default function Recommended() {

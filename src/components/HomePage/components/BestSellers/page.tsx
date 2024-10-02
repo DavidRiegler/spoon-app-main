@@ -1,18 +1,18 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Star, ChevronRight, ChevronLeft } from 'lucide-react'
+import { Star, ChevronRight, ChevronLeft, ShoppingCart } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 const bestSellers = [
-  { id: 1, name: 'Sushi Platter', price: 103.0, image: 'src/assets/PlaceholderPic.jpg', rating: 4.8 },
-  { id: 2, name: 'Chicken Stir Fry', price: 50.0, image: 'src/assets/PlaceholderPic.jpg', rating: 4.5 },
-  { id: 3, name: 'Vegetable Lasagna', price: 12.99, image: 'src/assets/PlaceholderPic.jpg', rating: 4.2 },
-  { id: 4, name: 'Berry Cupcake', price: 8.20, image: 'src/assets/PlaceholderPic.jpg', rating: 4.7 },
-  { id: 5, name: 'Margherita Pizza', price: 15.99, image: 'src/assets/PlaceholderPic.jpg', rating: 4.6 },
-  { id: 6, name: 'Beef Burger', price: 11.50, image: 'src/assets/PlaceholderPic.jpg', rating: 4.4 },
-  { id: 7, name: 'Caesar Salad', price: 9.99, image: 'src/assets/PlaceholderPic.jpg', rating: 4.3 },
-  { id: 8, name: 'Chocolate Brownie', price: 6.50, image: 'src/assets/PlaceholderPic.jpg', rating: 4.9 },
+  { id: 1, name: 'Sushi Platter', price: 103.0, image: 'src/assets/on-boarding/Pizza.jpg', rating: 4.8 },
+  { id: 2, name: 'Chicken Stir Fry', price: 50.0, image: 'src/assets/on-boarding/Pizza.jpg', rating: 4.5 },
+  { id: 3, name: 'Vegetable Lasagna', price: 12.99, image: 'src/assets/on-boarding/Pizza.jpg', rating: 4.2 },
+  { id: 4, name: 'Berry Cupcake', price: 8.20, image: 'src/assets/on-boarding/Pizza.jpg', rating: 4.7 },
+  { id: 5, name: 'Margherita Pizza', price: 15.99, image: 'src/assets/on-boarding/Pizza.jpg', rating: 4.6 },
+  { id: 6, name: 'Beef Burger', price: 11.50, image: 'src/assets/on-boarding/Pizza.jpg', rating: 4.4 },
+  { id: 7, name: 'Caesar Salad', price: 9.99, image: 'src/assets/on-boarding/Pizza.jpg', rating: 4.3 },
+  { id: 8, name: 'Chocolate Brownie', price: 6.50, image: 'src/assets/on-boarding/Pizza.jpg', rating: 4.9 },
 ]
 
 export default function BestSellers() {
@@ -80,8 +80,13 @@ export default function BestSellers() {
                   {favorites.includes(item.id) ? '❤️' : '🤍'}
                 </button>
                 <div className="p-4">
-                  <div className="flex justify-between items-center mb-2">
-                    <h4 className="font-bold text-sm truncate flex-1">{item.name}</h4>
+                  <div className="flex justify-center items-center mb-2">
+                    <button className="bg-burnt rounded-full p-2 hover:bg-orange-500"
+                      
+                    >
+                      <ShoppingCart className="w-5 h-5 text-white" />
+                    </button>
+                    <h4 className="font-bold text-sm truncate flex-1 text-center">{item.name}</h4>
                     <p className="text-burnt font-bold text-sm ml-2">${item.price.toFixed(2)}</p>
                   </div>
                 </div>
