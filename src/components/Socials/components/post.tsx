@@ -1,6 +1,8 @@
+// Post.js
 import { useState } from 'react'
 import { HeartIcon, ChatBubbleOvalLeftIcon, PaperAirplaneIcon, BookmarkIcon, FaceSmileIcon } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid'
+import StoryView from './StoryView'
 
 interface PostProps {
   id: number
@@ -8,22 +10,52 @@ interface PostProps {
   userImg: string
   img: string
   caption: string
+  hasStory?: boolean
+  stories: Array<{ id: number, username: string, userImg: string, img: string, hasStory: boolean }>
 }
 
-export default function Post({ id, username, userImg, img, caption }: PostProps) {
+export default function Post({ id, username, userImg, img, caption, hasStory = false, stories }: PostProps) {
   const [isLiked, setIsLiked] = useState(false)
   const [likes, setLikes] = useState(128)
+  const [selectedStoryIndex, setSelectedStoryIndex] = useState<number | null>(null)
 
   const handleLike = () => {
     setIsLiked(!isLiked)
     setLikes(isLiked ? likes - 1 : likes + 1)
   }
 
+  const openStory = () => {
+    if (hasStory) {
+      const storyIndex = stories.findIndex(story => story.username === username)
+      if (storyIndex !== -1) setSelectedStoryIndex(storyIndex)
+    }
+  }
+
+  const closeStory = () => {
+    setSelectedStoryIndex(null)
+  }
+
+  const handleUsernameClick = () => {
+    localStorage.setItem('username', username);
+    localStorage.setItem('profilePic', userImg);
+}
+
   return (
     <div className="bg-white my-7 border rounded-sm">
       <div className="flex items-center p-5">
-        <img src={userImg} className="rounded-full h-12 w-12 object-cover border p-1 mr-3" alt={username} />
-        <p className="flex-1 font-bold">{username}</p>
+        <div
+          className={`w-10 h-10 ${hasStory ? 'bg-gradient-to-tr from-lila to-burnt' : ''} rounded-full p-[2px] cursor-pointer`}
+          onClick={openStory}
+        >
+          <img 
+            src={userImg} 
+            className="rounded-full w-full h-full object-cover border-2 border-white" 
+            alt={username} 
+          />
+        </div>
+        <a href={`/socials/user-profile`} className="flex-1 font-bold ml-3" onClick={handleUsernameClick}>
+          {username}
+        </a> {/* Save username and profile picture to local storage on click */}
         <button className="font-bold text-sm">•••</button>
       </div>
 
@@ -62,6 +94,14 @@ export default function Post({ id, username, userImg, img, caption }: PostProps)
           <button className="font-semibold text-blue-400">Post</button>
         </form>
       </div>
+
+      {selectedStoryIndex !== null && (
+        <StoryView
+          stories={stories}
+          initialStoryIndex={selectedStoryIndex}
+          onClose={closeStory}
+        />
+      )}
     </div>
   )
 }

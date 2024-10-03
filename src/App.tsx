@@ -7,6 +7,8 @@ import Overview from './components/HomePage/components/BestSellers/overview'
 import OnboardingCards from './components/Register/on-boarding/page'
 import ForgotPasswordPage from './components/Login/forgot-password/page'
 import Socials from './components/Socials/page'
+import Profile from './components/Socials/components/profile'
+import Dating from './components/Dating/page'
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/overview" element={<Overview />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/socials" element={<Socials />} />
+        <Route path="/socials/user-profile" element={<Profile />} />
+        <Route path="/dating" element={<Dating />} />
       </Routes>
     </Router>
   )
