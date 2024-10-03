@@ -40,6 +40,8 @@ export default function RegisterPage() {
         username: username,
         email: email,
         password: password,
+        birthDate: dateOfBirth,
+        phoneNumber: mobileNumber,
       }
 
       const response = await fetch("http://127.0.0.1:3000/api/auth", {
