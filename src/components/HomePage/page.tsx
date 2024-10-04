@@ -6,14 +6,14 @@ import Recommended from './components/Recommended/page';
 
 const HomePage: React.FC = () => {
   return (
-    <div className="homepage bg-vanilla min-h-screen h-[130vh]">
-      <Navbar />
-      <main className="mx-auto mt-10 mb-10 ml-20 mr-20">
-        <Categories />
-        <div className="my-8 border-b-2 border-lila"></div>
-        <Bestsellers />
-        <div className="my-8 border-b-2 border-lila"></div>
-        <Recommended />
+    <div className="homepage bg-[#f9e9b0] min-h-screen">
+      <main className="mx-auto px-4 py-6 max-w-7xl">
+        <Navbar />
+        <div className='bg-white pt-4 px-4 pb-8'>
+          <Categories />
+          <Bestsellers />
+          <Recommended />
+        </div>
       </main>
     </div>
   );

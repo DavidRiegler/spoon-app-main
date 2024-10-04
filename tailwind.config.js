@@ -11,6 +11,7 @@ export default {
         lila: '#7C3B7C',
         snow: '#FCF7F8',
         vanilla: '#F3E9B5',
+        pink: '#C25EA9',
       },
     },
   },
