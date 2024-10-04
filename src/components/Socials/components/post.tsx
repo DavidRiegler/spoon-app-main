@@ -55,7 +55,7 @@ export default function Post({ id, username, userImg, img, caption, hasStory = f
         </div>
         <a href={`/socials/user-profile`} className="flex-1 font-bold ml-3" onClick={handleUsernameClick}>
           {username}
-        </a> {/* Save username and profile picture to local storage on click */}
+        </a> 
         <button className="font-bold text-sm">•••</button>
       </div>
 

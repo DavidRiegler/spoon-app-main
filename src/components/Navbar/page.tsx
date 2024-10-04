@@ -41,7 +41,7 @@ export default function Navbar() {
               <input
                 type="text"
                 placeholder="Search"
-                className="w-full py-2 px-4 pr-10 rounded-full border-2 border-[#e57e60] focus:outline-none focus:border-[#e57e60] text-burnt" 
+                className="w-full py-2 px-4 pr-10 rounded-full focus:outline-none focus:border-[#e57e60] text-burnt" 
               />
               <button className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#e57e60] text-white rounded-full p-1">
                 🔍

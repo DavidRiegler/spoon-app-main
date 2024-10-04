@@ -33,7 +33,7 @@ const Recommended: React.FC = () => {
               </div>
               <button 
                 onClick={() => toggleFavorite(item.id)}
-                className="text-lg border-2 border-vanilla bg-vanilla rounded-full p-1"
+                className="text-sm border-2 border-vanilla bg-vanilla rounded-full p-1"
               >
                 {favorites.includes(item.id) ? '💜' : '🤍'}
               </button>

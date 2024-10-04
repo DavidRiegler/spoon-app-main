@@ -12,7 +12,6 @@ const Bestsellers: React.FC = () => {
     <div className="mb-8">
       <h3 className="text-2xl font-bold mb-4 flex justify-between items-center text-burnt">
         Best Seller
-        <span className="text-pink text-lg cursor-pointer" onClick={() => window.location.href = '/overview'}>View All &gt;</span>
       </h3>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {bestSellers.map((item) => (

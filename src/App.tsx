@@ -9,6 +9,7 @@ import ForgotPasswordPage from './components/Login/forgot-password/page'
 import Socials from './components/Socials/page'
 import Profile from './components/Socials/components/profile'
 import Dating from './components/Dating/page'
+import Food from './components/Food/page'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/socials" element={<Socials />} />
         <Route path="/socials/user-profile" element={<Profile />} />
         <Route path="/dating" element={<Dating />} />
+        <Route path="/food" element={<Food />} />
       </Routes>
     </Router>
   )

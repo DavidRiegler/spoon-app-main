@@ -8,12 +8,21 @@ const categories = [
   { name: 'Drinks', icon: 'src/assets/icons/Drinks.png' },
 ];
 
-const Categories: React.FC = () => {
+interface CategoriesProps {
+  selectedCategory: string;
+  onCategorySelect: (category: string) => void;
+}
+
+const Categories: React.FC<CategoriesProps> = ({ selectedCategory, onCategorySelect }) => {
   return (
     <div className="mb-8">
       <div className="flex justify-between px-28 my-4 items-center">
         {categories.map((category) => (
-          <div key={category.name} className="flex flex-col items-center cursor-pointer">
+          <div 
+            key={category.name} 
+            className={`flex flex-col items-center cursor-pointer ${selectedCategory === category.name ? 'opacity-100' : 'opacity-50'}`}
+            onClick={() => onCategorySelect(category.name)}
+          >
             <div className="w-16 h-16 bg-white rounded-3xl flex items-center justify-center shadow-md mb-2 ">
               <span className="text-3xl">
                 <img 
