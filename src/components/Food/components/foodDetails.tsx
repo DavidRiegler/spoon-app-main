@@ -18,19 +18,18 @@ interface Item {
   toppings: Topping[]
 }
 
-// Extend the type to include selected toppings
 interface CartItem {
-  id: number
-  name: string
-  price: number
-  quantity: number
-  toppings: Topping[] // Add this line to store selected toppings
-}
+    id: number
+    name: string
+    price: number
+    quantity: number
+    toppings: Topping[] 
+    image: string 
+  }  
 
 const addToCart = (item: CartItem) => {
   const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
   
-  // Create a unique identifier based on item id and selected toppings
   const uniqueId = item.id + '-' + item.toppings.map(t => t.name).join('-');
 
   const existingItemIndex = cartItems.findIndex((i: CartItem) => {
@@ -39,9 +38,9 @@ const addToCart = (item: CartItem) => {
   });
   
   if (existingItemIndex > -1) {
-    cartItems[existingItemIndex].quantity += item.quantity; // Update quantity
+    cartItems[existingItemIndex].quantity += item.quantity; 
   } else {
-    cartItems.push(item); // Add new item with toppings
+    cartItems.push(item); 
   }
 
   localStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -140,11 +139,12 @@ export default function FoodDetails() {
             </div>
           </div>
           <button className="bg-lila text-white rounded-full py-2 px-6 flex items-center w-2/3 justify-center col-span-1"  onClick={() => addToCart({ 
-              id: item.id, 
-              name: item.name, 
-              price: totalPrice, 
-              quantity, 
-              toppings: toppings.filter(topping => topping.selected) // Only include selected toppings
+            id: item.id, 
+            name: item.name, 
+            price: totalPrice, 
+            quantity, 
+            toppings: toppings.filter(topping => topping.selected),
+            image: item.image 
             })}>
             <ShoppingCart className="mr-2"/>
             Add to Cart

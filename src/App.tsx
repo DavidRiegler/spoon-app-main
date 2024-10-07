@@ -11,6 +11,9 @@ import Profile from './components/Socials/components/profile'
 import Dating from './components/Dating/page'
 import Food from './components/Food/page'
 import FoodDetails from './components/Food/components/foodDetails'
+import Checkout from './components/Navbar/components/checkout'
+import Payment from './components/Navbar/components/payment'
+import OrderConfirmed from './components/Navbar/components/orderConfirmed'
 
 function App() {
   return (
@@ -28,6 +31,9 @@ function App() {
         <Route path="/dating" element={<Dating />} />
         <Route path="/food" element={<Food />} />
         <Route path="/food-details" element={<FoodDetails />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/order-confirmed" element={<OrderConfirmed />} />
       </Routes>
     </Router>
   )

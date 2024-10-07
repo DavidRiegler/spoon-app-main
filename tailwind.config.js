@@ -13,6 +13,9 @@ export default {
         vanilla: '#F3E9B5',
         pink: '#C25EA9',
       },
+      borderRadius: {
+        'custom': '3rem',
+      },
     },
   },
   plugins: [
