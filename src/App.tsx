@@ -10,6 +10,7 @@ import Socials from './components/Socials/page'
 import Profile from './components/Socials/components/profile'
 import Dating from './components/Dating/page'
 import Food from './components/Food/page'
+import FoodDetails from './components/Food/components/foodDetails'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/socials/user-profile" element={<Profile />} />
         <Route path="/dating" element={<Dating />} />
         <Route path="/food" element={<Food />} />
+        <Route path="/food-details" element={<FoodDetails />} />
       </Routes>
     </Router>
   )
