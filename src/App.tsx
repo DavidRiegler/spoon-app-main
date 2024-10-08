@@ -14,6 +14,7 @@ import FoodDetails from './components/Food/components/foodDetails'
 import Checkout from './components/Navbar/components/checkout'
 import Payment from './components/Navbar/components/payment'
 import OrderConfirmed from './components/Navbar/components/orderConfirmed'
+import RestaurantView from './components/Navbar/components/restaurantView'
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/order-confirmed" element={<OrderConfirmed />} />
+        <Route path="/restaurant" element={<RestaurantView />} />
       </Routes>
     </Router>
   )

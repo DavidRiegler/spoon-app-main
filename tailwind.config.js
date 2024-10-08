@@ -16,6 +16,9 @@ export default {
       borderRadius: {
         'custom': '3rem',
       },
+      width: {
+        '128': '35rem',
+      },
     },
   },
   plugins: [

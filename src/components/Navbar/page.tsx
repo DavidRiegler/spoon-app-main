@@ -43,7 +43,7 @@ export default function Navbar() {
                 placeholder="Search"
                 className="w-full py-2 px-4 pr-10 rounded-full focus:outline-none focus:border-[#e57e60] text-burnt" 
               />
-              <button className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#e57e60] text-white rounded-full p-1">
+              <button className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#e57e60] text-white rounded-full p-1" onClick={() => window.location.href = '/restaurant'}>
                 🔍
               </button>
             </div>
