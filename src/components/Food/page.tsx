@@ -4,7 +4,7 @@ import Sort from './components/sortBy';
 
 const Food: React.FC = () => {
   return (
-    <div className="homepage bg-[#f9e9b0] min-h-screen">
+    <div className="homepage bg-vanilla min-h-screen">
       <main className="mx-auto px-4 py-6 max-w-7xl">
         <Navbar />
         <div className='bg-pink rounded-b-xl'>

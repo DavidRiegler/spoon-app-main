@@ -32,7 +32,7 @@ export default function Navbar() {
   const currentPath = typeof window !== 'undefined' ? window.location.pathname : ''
 
   return (
-    <div className="flex flex-col bg-[#f9e9b0]">
+    <div className="flex flex-col bg-vanilla">
       <nav className="px-4 py-2">
         <div className="max-w-7xl mx-auto flex flex-col items-center">
           <h1 className="text-4xl font-bold text-[#e57e60] mb-4 mt-4">Spoon It If You Like It</h1>
