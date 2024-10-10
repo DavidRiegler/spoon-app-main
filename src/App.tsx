@@ -14,6 +14,8 @@ import Checkout from './components/Navbar/components/checkout'
 import Payment from './components/Navbar/components/payment'
 import OrderConfirmed from './components/Navbar/components/orderConfirmed'
 import RestaurantView from './components/Navbar/components/restaurantView'
+import ChatList from './components/Dating/components/chatList'
+import Chat from './components/Dating/components/chat'
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
         <Route path="/payment" element={<Payment />} />
         <Route path="/order-confirmed" element={<OrderConfirmed />} />
         <Route path="/restaurant" element={<RestaurantView />} />
+        <Route path="/dating/chats" element={<ChatList />} />
+        <Route path="/dating/chat/:id" element={<Chat />} />
       </Routes>
     </Router>
   )

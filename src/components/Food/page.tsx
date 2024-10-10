@@ -8,7 +8,7 @@ const Food: React.FC = () => {
       <main className="mx-auto px-4 py-6 max-w-7xl">
         <Navbar />
         <div className='bg-pink rounded-b-xl'>
-          <div className='bg-white pt-4 px-4 pb-4 rounded-tr-xl rounded-b-xl'>
+          <div className='bg-white pt-4 px-4 pb-4 rounded-t-xl rounded-b-xl'>
             <Sort />
           </div>
         </div>
