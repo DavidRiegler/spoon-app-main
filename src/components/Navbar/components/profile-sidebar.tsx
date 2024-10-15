@@ -15,7 +15,7 @@ export default function ProfileSidebar({ isOpen, onClose }: ProfileSidebarProps)
   ];
 
   const userDataString = localStorage.getItem('userData');
-  const user = userDataString ? JSON.parse(userDataString).user : { name: "", surname: "", email: "" };
+  const user = userDataString ? JSON.parse(userDataString).user : { name: "", surname: "", email: "", propic: "" };
 
   return (
     <div>
@@ -40,7 +40,7 @@ export default function ProfileSidebar({ isOpen, onClose }: ProfileSidebarProps)
           <div className="flex-grow overflow-auto p-6 bg-lila rounded-bl-custom">
             <div className="flex flex-col items-center justify-center h-full">
               <div className="flex flex-row items-center pb-4">
-                <img src="src/assets/prop-users/fcb.png" alt="Profile Picture" className="rounded-full h-20 w-20 object-contain" />
+                <img src={user.propic} alt="Profile Picture" className="rounded-full h-20 w-20 object-contain" />
                 <div className="flex flex-col items-center mb-6">
                   <h2 className="text-3xl font-bold text-vanilla p-2">
                     {user.name || 'Guest'} {user.surname || ''}

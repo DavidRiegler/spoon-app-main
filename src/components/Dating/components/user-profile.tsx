@@ -107,14 +107,19 @@ export default function UserProfile() {
   return (
     <div>
       {showPopup && (
-        <div className={`popup ${showPopup}`}>
-          <div className="message">
-            {showPopup === 'like' && 'You liked this user!'}
-            {showPopup === 'dislike' && 'You disliked this user!'}
-            {showPopup === 'match' && 'It\'s a match!'}
+        <div 
+          className={`popup fixed inset-0 flex z-30 items-center justify-center transition-transform duration-500 ${showPopup === 'like' ? 'bg-green-100 animate-like' : showPopup === 'dislike' ? 'bg-red-100 animate-dislike' : 'bg-purple-100 animate-match'}`}
+        >
+          <div className="text-center p-8 bg-white rounded-lg shadow-lg">
+            <div className="message text-3xl font-bold">
+              {showPopup === 'like' && 'You liked this user!'}
+              {showPopup === 'dislike' && 'You disliked this user!'}
+              {showPopup === 'match' && 'It\'s a match!'}
+            </div>
           </div>
         </div>
       )}
+
 
       <div className="relative">
         <div className='right-2 absolute top-2 bg-white p-2 rounded-full'>

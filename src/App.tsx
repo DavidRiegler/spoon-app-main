@@ -16,6 +16,9 @@ import OrderConfirmed from './components/Navbar/components/orderConfirmed'
 import RestaurantView from './components/Navbar/components/restaurantView'
 import ChatList from './components/Dating/components/chatList'
 import Chat from './components/Dating/components/chat'
+import MyProfile from './components/Navbar/components/Profile-sidebar/profile'
+import PaymentMethods from './components/Navbar/components/Profile-sidebar/payment-methods'
+import AddCard from './components/Navbar/components/Profile-sidebar/add-card'
 
 function App() {
   return (
@@ -38,6 +41,9 @@ function App() {
         <Route path="/restaurant" element={<RestaurantView />} />
         <Route path="/dating/chats" element={<ChatList />} />
         <Route path="/dating/chat/:id" element={<Chat />} />
+        <Route path="/my-profile" element={<MyProfile />} />
+        <Route path="/payment-methods" element={<PaymentMethods />} />
+        <Route path="/add-card" element={<AddCard />} />
       </Routes>
     </Router>
   )
