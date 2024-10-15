@@ -107,6 +107,7 @@ export default function Sort() {
   const [favorites, setFavorites] = useState<number[]>([]);
   const [sortOption, setSortOption] = useState<string>('priceAsc');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [itemsToShow, setItemsToShow] = useState<number>(6); // State to manage number of items shown
   const navigate = useNavigate();
 
   const toggleFavorite = (id: number) => {
@@ -142,6 +143,10 @@ export default function Sort() {
     navigate(`/food-details`, { state: { item } });
   };
 
+  const handleLoadMore = () => {
+    setItemsToShow(prev => prev + 6); // Increase the number of items shown by 6
+  };
+
   return (
     <div className="min-h-screen">
       <Categories selectedCategory={selectedCategory} onCategorySelect={setSelectedCategory} />
@@ -161,7 +166,7 @@ export default function Sort() {
           </select>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-          {filteredAndSortedItems().map((item) => (
+          {filteredAndSortedItems().slice(0, itemsToShow).map((item) => (
             <div key={item.id} className="bg-white rounded-3xl shadow-lg overflow-hidden">
               <div className="relative">
                 <img src={item.image} alt={item.name} className="h-64 w-full object-cover" />
@@ -193,6 +198,13 @@ export default function Sort() {
             </div>
           ))}
         </div>
+        {itemsToShow < filteredAndSortedItems().length && ( // Check if there are more items to load
+          <div className="flex justify-center mt-4">
+            <button onClick={handleLoadMore} className="bg-pink text-white font-bold px-4 py-2 rounded-full">
+              Load More
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

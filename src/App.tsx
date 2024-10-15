@@ -16,6 +16,12 @@ import OrderConfirmed from './components/Navbar/components/orderConfirmed'
 import RestaurantView from './components/Navbar/components/restaurantView'
 import ChatList from './components/Dating/components/chatList'
 import Chat from './components/Dating/components/chat'
+import ContactUs from './components/Navbar/components/Profile-sidebar/contact-us'
+import HelpPage from './components/Navbar/components/Profile-sidebar/help'
+import Support from './components/Navbar/components/Profile-sidebar/support'
+import HelpCenterPage from './components/Navbar/components/Profile-sidebar/help-center'
+import Settings from './components/Navbar/components/Profile-sidebar/settings'
+import AddressManager from './components/Navbar/components/Profile-sidebar/address-manager'
 
 function App() {
   return (
@@ -35,9 +41,15 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/order-confirmed" element={<OrderConfirmed />} />
-        <Route path="/restaurant" element={<RestaurantView />} />
+        <Route path="/restaurant/:id" element={<RestaurantView />} />
         <Route path="/dating/chats" element={<ChatList />} />
         <Route path="/dating/chat/:id" element={<Chat />} />
+        <Route path="/contact-us" element={<ContactUs />} />
+        <Route path="/help-&-faqs" element={<HelpPage />} />
+        <Route path="/support" element={<Support />} />
+        <Route path="/help-center" element={<HelpCenterPage />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/address-manager" element={<AddressManager />} />
       </Routes>
     </Router>
   )

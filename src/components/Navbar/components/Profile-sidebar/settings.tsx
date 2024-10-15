@@ -1,0 +1,140 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronDown, Key, User, Eye, EyeOff } from 'react-feather';
+
+export default function Settings() {
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordSectionOpen, setPasswordSectionOpen] = useState(false);
+  const [deleteSectionOpen, setDeleteSectionOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate(-1);
+  };
+
+  const handleChangePassword = () => {
+    console.log('Changing password');
+  };
+
+  const handleDeleteAccount = () => {
+    console.log('Account deleted');
+  };
+
+  const togglePasswordSection = () => {
+    setPasswordSectionOpen(!passwordSectionOpen);
+    if (!passwordSectionOpen) {
+      setDeleteSectionOpen(false); // Close the delete section if opening the password section
+    }
+  };
+
+  const toggleDeleteSection = () => {
+    setDeleteSectionOpen(!deleteSectionOpen);
+    if (!deleteSectionOpen) {
+      setPasswordSectionOpen(false); // Close the password section if opening the delete section
+    }
+  };
+
+  const renderPasswordInput = (
+    value: string | number | readonly string[] | undefined,
+    onChange: { (value: React.SetStateAction<string>): void; (arg0: string): void },
+    placeholder: string | undefined,
+    showPassword: boolean,
+    setShowPassword: { (value: React.SetStateAction<boolean>): void; (arg0: boolean): void }
+  ) => (
+    <div className="relative">
+      <input
+        type={showPassword ? 'text' : 'password'}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="w-full p-3 bg-white border-black border rounded-lg pr-10"
+      />
+      <button
+        onClick={() => setShowPassword(!showPassword)}
+        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+      >
+        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+      </button>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-vanilla flex flex-col">
+      <header className="w-full bg-vanilla p-4 flex items-center">
+        <button className="text-lila" onClick={handleBack}>
+          <ChevronLeft size={24} />
+        </button>
+        <h1 className="text-2xl font-bold text-lila flex-grow text-center">Settings</h1>
+        <div className="w-6 h-6 bg-vanilla"></div>
+      </header>
+
+      <main className="flex-grow w-full max-w-md mx-auto p-4 flex flex-col space-y-4">
+        <div className="w-full">
+          <button
+            onClick={togglePasswordSection}
+            className="flex items-center justify-between w-full p-4 bg-white rounded-lg shadow"
+          >
+            <div className="flex items-center">
+              <Key className="text-lila mr-3" size={24} />
+              <span>Password Settings</span>
+            </div>
+            <ChevronDown size={20} className={`text-gray-400 transition-transform duration-200 ${passwordSectionOpen ? 'rotate-180' : ''}`} />
+          </button>
+
+          {passwordSectionOpen && (
+            <div className="mt-4 bg-white p-6 rounded-lg shadow-sm space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
+                {renderPasswordInput(currentPassword, setCurrentPassword, "Enter current password", showCurrentPassword, setShowCurrentPassword)}
+                <a href="#" className="text-sm text-lila float-right mt-1">Forgot Password?</a>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+                {renderPasswordInput(newPassword, setNewPassword, "Enter new password", showNewPassword, setShowNewPassword)}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
+                {renderPasswordInput(confirmPassword, setConfirmPassword, "Confirm new password", showConfirmPassword, setShowConfirmPassword)}
+              </div>
+              <button
+                onClick={handleChangePassword}
+                className="w-full bg-lila text-white py-3 rounded-full font-medium"
+              >
+                Change Password
+              </button>
+            </div>
+          )}
+        </div>
+        <div className="w-full">
+          <button
+            onClick={toggleDeleteSection}
+            className="flex items-center justify-between w-full p-4 bg-white rounded-lg shadow"
+          >
+            <div className="flex items-center">
+              <User className="text-lila mr-3" size={24} />
+              <span>Delete Account</span>
+            </div>
+            <ChevronDown size={20} className={`text-gray-400 transition-transform duration-200 ${deleteSectionOpen ? 'rotate-180' : ''}`} />
+          </button>
+
+          {deleteSectionOpen && (
+            <div className="mt-4 bg-red-50 p-4 rounded-lg shadow-sm">
+              <p className="text-red-600 text-sm mb-4">Are you sure you want to delete your account? This action cannot be undone.</p>
+              <button
+                onClick={handleDeleteAccount}
+                className="w-full bg-red-600 text-white py-3 rounded-full font-medium"
+              >
+                Confirm Account Deletion
+              </button>
+            </div>
+          )}
+        </div>
+      </main>
+    </div>
+  );
+}

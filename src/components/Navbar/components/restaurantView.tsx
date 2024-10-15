@@ -12,12 +12,12 @@ export default function RestaurantView() {
   const navigate = useNavigate()
 
   const images = [
-    "src/assets/restaurants/piedmont-old-town-restaurant.png",
-    "src/assets/on-boarding/Pizza.jpg",
-    "src/assets/on-boarding/Pizza.jpg",
-    "src/assets/on-boarding/Pizza.jpg",
-    "src/assets/on-boarding/Pizza.jpg"
-  ]
+    "../src/assets/restaurants/piedmont-old-town-restaurant.png",
+    "../src/assets/on-boarding/Pizza.jpg",
+    "../src/assets/on-boarding/Pizza.jpg",
+    "../src/assets/on-boarding/Pizza.jpg",
+    "../src/assets/on-boarding/Pizza.jpg"
+  ] 
 
   const openGallery = (index: number) => {
     setCurrentImageIndex(index)

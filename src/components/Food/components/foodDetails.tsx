@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { ChevronLeft, Heart, Minus, Plus, ShoppingCart, Star } from 'lucide-react'
+import { useHref, useLocation, useNavigate } from 'react-router-dom'
+import { ChevronLeft, Heart, Minus, Plus, ShoppingCart, Star, Dot } from 'lucide-react'
 
 interface Topping {
   name: string
@@ -74,6 +74,10 @@ export default function FoodDetails() {
               <ChevronLeft size={24} />
             </button>
             <h1 className="text-2xl font-bold text-lila">{item.name}</h1>
+            <Dot size={25} className='text-lila'/>
+            <button onClick={() => navigate(`/restaurant/${item.id}`)}>
+              <h1 className="text-2xl font-bold text-lila">Restaurant Name</h1>
+            </button>
           </div>
           <button onClick={() => setIsFavorite(!isFavorite)}>
             <Heart size={24} fill={isFavorite ? 'purple' : 'none'} color={isFavorite ? 'purple' : 'black'} />
