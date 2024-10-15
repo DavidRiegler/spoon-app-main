@@ -47,6 +47,15 @@ function App() {
         <Route path="/restaurant/:id" element={<RestaurantView />} />
         <Route path="/dating/chats" element={<ChatList />} />
         <Route path="/dating/chat/:id" element={<Chat />} />
+        <Route path="/my-profile" element={<MyProfile />} />
+        <Route path="/contact-us" element={<ContactUs />} />
+        <Route path="/help-&-faqs" element={<HelpPage />} />
+        <Route path="/support" element={<Support />} />
+        <Route path="/help-center" element={<HelpCenterPage />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/address-manager" element={<AddressManager />} />
+        <Route path="/payment-methods" element={<PaymentMethods />} />
+        <Route path="/add-card" element={<AddCard />} />
       </Routes>
     </Router>
   )

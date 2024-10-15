@@ -13,29 +13,81 @@ export default function Settings() {
   const [deleteSectionOpen, setDeleteSectionOpen] = useState(false);
   const navigate = useNavigate();
 
+  const userDataString = localStorage.getItem('userData');
+  const user = userDataString ? JSON.parse(userDataString).user : null;
+
   const handleBack = () => {
     navigate(-1);
   };
 
-  const handleChangePassword = () => {
-    console.log('Changing password');
+  const handleChangePassword = async () => {
+    if (newPassword !== confirmPassword) {
+      alert('Passwords do not match.');
+      return;
+    }
+
+    const updatedUserData = {
+      ...user,
+      password: newPassword,
+    };
+
+    const userId = user.id;
+    const apiUrl = `http://127.0.0.1:3000/api/users/${userId}`;
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authtoken')}`,
+        },
+        body: JSON.stringify({ password: newPassword }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update password');
+      }
+
+      localStorage.setItem('userData', JSON.stringify({ user: updatedUserData }));
+    } catch (error) {
+      console.error('Error updating password:', error);
+    }
   };
 
-  const handleDeleteAccount = () => {
-    console.log('Account deleted');
+  const handleDeleteAccount = async () => {
+    const userId = user.id;
+    const apiUrl = `http://127.0.0.1:3000/api/users/${userId}`;
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('authtoken')}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete account');
+      }
+
+      localStorage.clear();
+      navigate('/');
+    } catch (error) {
+      console.error('Error deleting account:', error);
+    }
   };
 
   const togglePasswordSection = () => {
     setPasswordSectionOpen(!passwordSectionOpen);
     if (!passwordSectionOpen) {
-      setDeleteSectionOpen(false); // Close the delete section if opening the password section
+      setDeleteSectionOpen(false);
     }
   };
 
   const toggleDeleteSection = () => {
     setDeleteSectionOpen(!deleteSectionOpen);
     if (!deleteSectionOpen) {
-      setPasswordSectionOpen(false); // Close the password section if opening the delete section
+      setPasswordSectionOpen(false);
     }
   };
 
@@ -90,16 +142,15 @@ export default function Settings() {
             <div className="mt-4 bg-white p-6 rounded-lg shadow-sm space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
-                {renderPasswordInput(currentPassword, setCurrentPassword, "Enter current password", showCurrentPassword, setShowCurrentPassword)}
-                <a href="#" className="text-sm text-lila float-right mt-1">Forgot Password?</a>
+                {renderPasswordInput(currentPassword, setCurrentPassword, 'Enter current password', showCurrentPassword, setShowCurrentPassword)}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">New Password</label>
-                {renderPasswordInput(newPassword, setNewPassword, "Enter new password", showNewPassword, setShowNewPassword)}
+                {renderPasswordInput(newPassword, setNewPassword, 'Enter new password', showNewPassword, setShowNewPassword)}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
-                {renderPasswordInput(confirmPassword, setConfirmPassword, "Confirm new password", showConfirmPassword, setShowConfirmPassword)}
+                {renderPasswordInput(confirmPassword, setConfirmPassword, 'Confirm new password', showConfirmPassword, setShowConfirmPassword)}
               </div>
               <button
                 onClick={handleChangePassword}
@@ -110,6 +161,7 @@ export default function Settings() {
             </div>
           )}
         </div>
+
         <div className="w-full">
           <button
             onClick={toggleDeleteSection}
