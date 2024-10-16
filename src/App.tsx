@@ -25,6 +25,7 @@ import Support from './components/Navbar/components/Profile-sidebar/support'
 import HelpCenterPage from './components/Navbar/components/Profile-sidebar/help-center'
 import Settings from './components/Navbar/components/Profile-sidebar/settings'
 import AddressManager from './components/Navbar/components/Profile-sidebar/address-manager'
+import Favorites from './components/Navbar/components/Profile-sidebar/favorites'
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
         <Route path="/address-manager" element={<AddressManager />} />
         <Route path="/payment-methods" element={<PaymentMethods />} />
         <Route path="/add-card" element={<AddCard />} />
+        <Route path="/favorites" element={<Favorites />} />
       </Routes>
     </Router>
   )

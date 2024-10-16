@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import Categories from './categories';
@@ -60,7 +60,7 @@ const allItems: Item[] = [
       { name: 'Olives', price: 1.0, selected: false },
       { name: 'Spinach', price: 0.5, selected: false },
     ],
-  },  
+  },
   {
     id: 4,
     name: 'Berry Cupcake',
@@ -97,9 +97,7 @@ const allItems: Item[] = [
     image: 'src/assets/prop-food/VegetableSpringrolls.jpg',
     categories: ['Snacks', 'Vegan'],
     description: 'Crispy spring rolls filled with fresh vegetables.',
-    toppings: [
-      { name: 'Sweet Chili Sauce', price: 0.5, selected: false },
-    ],
+    toppings: [{ name: 'Sweet Chili Sauce', price: 0.5, selected: false }],
   },
 ];
 
@@ -110,17 +108,34 @@ export default function Sort() {
   const [itemsToShow, setItemsToShow] = useState<number>(6); // State to manage number of items shown
   const navigate = useNavigate();
 
+  // Load favorites from localStorage when the component mounts
+  useEffect(() => {
+    const storedFavorites = localStorage.getItem('favoriteFood');
+    if (storedFavorites) {
+      setFavorites(JSON.parse(storedFavorites).map((item: Item) => item.id));
+    }
+  }, []);
+
   const toggleFavorite = (id: number) => {
-    setFavorites((prev) =>
-      prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
-    );
+    setFavorites((prev) => {
+      let updatedFavorites: number[];
+      if (prev.includes(id)) {
+        updatedFavorites = prev.filter((itemId) => itemId !== id);
+      } else {
+        updatedFavorites = [...prev, id];
+      }
+
+      // Update localStorage
+      const favoriteItems = allItems.filter((item) => updatedFavorites.includes(item.id));
+      localStorage.setItem('favoriteFood', JSON.stringify(favoriteItems));
+
+      return updatedFavorites;
+    });
   };
 
   const filteredAndSortedItems = () => {
     return allItems
-      .filter((item) =>
-        selectedCategory === 'All' || item.categories.includes(selectedCategory)
-      )
+      .filter((item) => selectedCategory === 'All' || item.categories.includes(selectedCategory))
       .sort((a, b) => {
         switch (sortOption) {
           case 'priceAsc':
@@ -144,7 +159,7 @@ export default function Sort() {
   };
 
   const handleLoadMore = () => {
-    setItemsToShow(prev => prev + 6); // Increase the number of items shown by 6
+    setItemsToShow((prev) => prev + 6); // Increase the number of items shown by 6
   };
 
   return (
@@ -166,39 +181,38 @@ export default function Sort() {
           </select>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-          {filteredAndSortedItems().slice(0, itemsToShow).map((item) => (
-            <div key={item.id} className="bg-white rounded-3xl shadow-lg overflow-hidden">
-              <div className="relative">
-                <img src={item.image} alt={item.name} className="h-64 w-full object-cover" />
-                <div className="bg-white bg-opacity-100 rounded-full p-1 px-2 flex items-center absolute top-2 left-2">
-                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                  <span className="ml-1 text-sm font-bold text-burnt">
-                    {item.rating.toFixed(1)}
-                  </span>
+          {filteredAndSortedItems()
+            .slice(0, itemsToShow)
+            .map((item) => (
+              <div key={item.id} className="bg-white rounded-3xl shadow-lg overflow-hidden">
+                <div className="relative">
+                  <img src={item.image} alt={item.name} className="h-64 w-full object-cover" />
+                  <div className="bg-white bg-opacity-100 rounded-full p-1 px-2 flex items-center absolute top-2 left-2">
+                    <Star className="w-5 h-5 text-yellow-400 fill-current" />
+                    <span className="ml-1 text-sm font-bold text-burnt">
+                      {item.rating.toFixed(1)}
+                    </span>
+                  </div>
+                  <button onClick={() => toggleFavorite(item.id)} className="absolute top-2 right-2 text-xl">
+                    {favorites.includes(item.id) ? '💜' : '🤍'}
+                  </button>
+                  <div className="absolute bottom-2 left-2 bg-pink text-white rounded-full px-3 py-1 text-sm font-bold">
+                    ${item.price.toFixed(2)}
+                  </div>
                 </div>
-                <button
-                  onClick={() => toggleFavorite(item.id)}
-                  className="absolute top-2 right-2 text-xl"
-                >
-                  {favorites.includes(item.id) ? '💜' : '🤍'} 
-                </button>
-                <div className="absolute bottom-2 left-2 bg-pink text-white rounded-full px-3 py-1 text-sm font-bold">
-                  ${item.price.toFixed(2)}
+                <div className="p-4 flex justify-between">
+                  <h2 className="text-xl font-bold mb-2">{item.name}</h2>
+                  <button
+                    className="bg-pink rounded-full p-2 text-white font-bold"
+                    onClick={() => handleItemClick(item)}
+                  >
+                    Find Out More
+                  </button>
                 </div>
               </div>
-              <div className="p-4 flex justify-between">
-                <h2 className="text-xl font-bold mb-2">{item.name}</h2>
-                <button
-                  className="bg-pink rounded-full p-2 text-white font-bold"
-                  onClick={() => handleItemClick(item)} 
-                >
-                  Find Out More
-                </button>
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
-        {itemsToShow < filteredAndSortedItems().length && ( // Check if there are more items to load
+        {itemsToShow < filteredAndSortedItems().length && (
           <div className="flex justify-center mt-4">
             <button onClick={handleLoadMore} className="bg-pink text-white font-bold px-4 py-2 rounded-full">
               Load More

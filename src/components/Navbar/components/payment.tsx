@@ -61,8 +61,8 @@ export default function Payment() {
         <div className="mb-6 border-t-2 pt-4">
           <div className="flex justify-between items-center mb-3">
             <h2 className="text-lila font-semibold text-xl">Payment Method</h2>
-            <button className="bg-[#E9B7E9] rounded px-3 py-1 text-pink">
-              Edit {/* TODO */}
+            <button className="bg-[#E9B7E9] rounded px-3 py-1 text-pink" onClick={() => window.location.href = '/payment-methods'}>
+              Edit
             </button>
           </div>
           <div className="flex items-center gap-3">

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { ShoppingCart, User } from 'lucide-react'
+import { Heart, ShoppingCart, User } from 'lucide-react'
 import CartSidebar from './components/cart-sidebar'
 import ProfileSidebar from './components/profile-sidebar'
 
@@ -47,14 +47,15 @@ export default function Navbar() {
                 🔍
               </button>
             </div>
-            <div className="flex items-center space-x-4 -ml-24">
+            <div className="flex items-center space-x-4 -ml-36">
+            <button className="text-burnt" onClick={() => window.location.href = '/favorites'}>
+                <Heart className="h-10 w-10 bg-white p-2 rounded-lg" />
+              </button>
               <button className="text-burnt" onClick={toggleCart}>
                 <ShoppingCart className="h-10 w-10 bg-white p-2 rounded-lg" />
-                <span className="sr-only">Toggle cart</span>
               </button>
               <button className="text-burnt" onClick={toggleProfile}>
                 <User className="h-10 w-10 bg-white p-2 rounded-lg" />
-                <span className="sr-only">Toggle profile</span>
               </button>
             </div>
           </div>
