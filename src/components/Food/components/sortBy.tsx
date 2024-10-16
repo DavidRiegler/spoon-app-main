@@ -18,6 +18,8 @@ interface Item {
   categories: string[];
   description: string;
   toppings: Topping[];
+  restaurantId: number;
+  restaurantName: string;
 }
 
 const allItems: Item[] = [
@@ -33,6 +35,8 @@ const allItems: Item[] = [
       { name: 'Wasabi', price: 1.0, selected: false },
       { name: 'Soy Sauce', price: 0.5, selected: false },
     ],
+    restaurantId: 101,
+    restaurantName: 'Sushi House',
   },
   {
     id: 2,
@@ -46,6 +50,8 @@ const allItems: Item[] = [
       { name: 'Ice Cubes', price: 0.0, selected: true },
       { name: 'Coca Cola', price: 2.0, selected: false },
     ],
+    restaurantId: 102,
+    restaurantName: 'Whiskey Bar',
   },
   {
     id: 3,
@@ -60,6 +66,8 @@ const allItems: Item[] = [
       { name: 'Olives', price: 1.0, selected: false },
       { name: 'Spinach', price: 0.5, selected: false },
     ],
+    restaurantId: 103,
+    restaurantName: 'Vegan Bistro',
   },
   {
     id: 4,
@@ -73,6 +81,8 @@ const allItems: Item[] = [
       { name: 'Cream Cheese Frosting', price: 0.5, selected: false },
       { name: 'Chocolate Drizzle', price: 0.3, selected: false },
     ],
+    restaurantId: 104,
+    restaurantName: 'Cupcake Cafe',
   },
   {
     id: 5,
@@ -88,6 +98,8 @@ const allItems: Item[] = [
       { name: 'Lettuce', price: 0.2, selected: false },
       { name: 'Fries', price: 5.0, selected: false },
     ],
+    restaurantId: 105,
+    restaurantName: 'Burger Joint',
   },
   {
     id: 6,
@@ -96,8 +108,22 @@ const allItems: Item[] = [
     rating: 4.9,
     image: 'src/assets/prop-food/VegetableSpringrolls.jpg',
     categories: ['Snacks', 'Vegan'],
-    description: 'Crispy spring rolls filled with fresh vegetables.',
+    description: 'Crispy spring rolls filled with fresh vegetables. (Snack Sized)',
     toppings: [{ name: 'Sweet Chili Sauce', price: 0.5, selected: false }],
+    restaurantId: 106,
+    restaurantName: 'Spring Roll House',
+  },
+  {
+    id: 7,
+    name: 'Vegetable Spring Rolls',
+    price: 10.0,
+    rating: 4.9,
+    image: 'src/assets/prop-food/VegetableSpringrolls.jpg',
+    categories: ['Meal', 'Vegan'],
+    description: 'Crispy spring rolls filled with fresh vegetables. (Meal sized)',
+    toppings: [{ name: 'Sweet Chili Sauce', price: 0.5, selected: false }],
+    restaurantId: 106,
+    restaurantName: 'Spring Roll House',
   },
 ];
 
@@ -105,10 +131,9 @@ export default function Sort() {
   const [favorites, setFavorites] = useState<number[]>([]);
   const [sortOption, setSortOption] = useState<string>('priceAsc');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [itemsToShow, setItemsToShow] = useState<number>(6); // State to manage number of items shown
+  const [itemsToShow, setItemsToShow] = useState<number>(6); 
   const navigate = useNavigate();
 
-  // Load favorites from localStorage when the component mounts
   useEffect(() => {
     const storedFavorites = localStorage.getItem('favoriteFood');
     if (storedFavorites) {
@@ -125,7 +150,6 @@ export default function Sort() {
         updatedFavorites = [...prev, id];
       }
 
-      // Update localStorage
       const favoriteItems = allItems.filter((item) => updatedFavorites.includes(item.id));
       localStorage.setItem('favoriteFood', JSON.stringify(favoriteItems));
 
@@ -159,7 +183,7 @@ export default function Sort() {
   };
 
   const handleLoadMore = () => {
-    setItemsToShow((prev) => prev + 6); // Increase the number of items shown by 6
+    setItemsToShow((prev) => prev + 6);
   };
 
   return (

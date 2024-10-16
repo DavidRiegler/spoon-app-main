@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useHref, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { ChevronLeft, Heart, Minus, Plus, ShoppingCart, Star, Dot } from 'lucide-react'
 
 interface Topping {
@@ -16,6 +16,8 @@ interface Item {
   image: string
   description: string
   toppings: Topping[]
+  restaurantId: number
+  restaurantName: string
 }
 
 interface CartItem {
@@ -75,8 +77,8 @@ export default function FoodDetails() {
             </button>
             <h1 className="text-2xl font-bold text-lila">{item.name}</h1>
             <Dot size={25} className='text-lila'/>
-            <button onClick={() => navigate(`/restaurant/${item.id}`)}>
-              <h1 className="text-2xl font-bold text-lila">Restaurant Name</h1>
+            <button onClick={() => navigate(`/restaurant/${item.restaurantId}`)}>
+              <h1 className="text-2xl font-bold text-lila">{item.restaurantName}</h1>
             </button>
           </div>
           <button onClick={() => setIsFavorite(!isFavorite)}>
@@ -91,7 +93,7 @@ export default function FoodDetails() {
 
         <div className="flex flex-col md:flex-row">
           <div className="w-full md:w-1/2 pr-0 md:pr-4 mb-4 md:mb-0">
-            <div className="aspect-w-16 aspect-h-9 mb-4">
+            <div className="aspect-w-16 aspect-h-9 mb-4 h-80">
               <img 
                 src={item.image} 
                 alt={item.name} 
