@@ -1,16 +1,24 @@
-'use client'
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Edit2, Minus, Plus, Trash2 } from 'lucide-react';
 
 export default function OrderConfirmation() {
   const [cartItems, setCartItems] = useState<any[]>([]);
-  const [address, setAddress] = useState('778 Locust View Drive Oaklanda, CA'); 
+  const [address, setAddress] = useState<string>(''); 
 
   useEffect(() => {
     const storedCartItems = localStorage.getItem('cartItems');
     if (storedCartItems) {
       setCartItems(JSON.parse(storedCartItems));
+    }
+
+    const userData = localStorage.getItem('userData');
+    if (userData) {
+      const parsedUserData = JSON.parse(userData);
+      if (parsedUserData.user && parsedUserData.user.selectedAddress) {
+        setAddress(parsedUserData.user.selectedAddress.address);
+      }
     }
   }, []);
 
@@ -40,38 +48,35 @@ export default function OrderConfirmation() {
     setCartItems(updatedCartItems);
   };
 
-  const handleEditAddress = () => {
-    setAddress(''); 
-  };
-
   return (
     <div className="bg-vanilla min-h-screen p-6">
       <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6">
         <div className="flex items-center justify-between mb-6">
-          <button className="text-pink" onClick={() => window.location.href = '/food'}>
+          <button className="text-lila" onClick={() => window.location.href = '/food'}>
             <ArrowLeft className="h-6 w-6" />
           </button>
-          <h1 className="text-3xl font-bold text-pink">Confirm Order</h1>
+          <h1 className="text-3xl font-bold text-lila">Confirm Order</h1>
           <div className="w-6"></div>
         </div>
 
         <div className="mb-6">
-          <h2 className="text-xl font-semibold text-pink mb-2">Shipping Address</h2>
+          <h2 className="text-xl font-semibold text-lila mb-2">Shipping Address</h2>
           <div className="flex items-center justify-between bg-gray-100 rounded-lg p-3">
             <input
               type="text"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              className="text-pink bg-transparent border-none outline-none flex-1"
+              className="text-lila bg-transparent border-none outline-none flex-1"
             />
-            <button className="text-pink" onClick={handleEditAddress}>
+            <button className="text-lila" onClick={() => window.location.href = '/address-manager'}>
               <Edit2 className="h-5 w-5" />
             </button>
           </div>
         </div>
+
         <div className="mb-6">
           <div className="flex items-center justify-between mb-2">
-            <h2 className="text-xl font-semibold text-pink">Order Summary</h2>
+            <h2 className="text-xl font-semibold text-lila">Order Summary</h2>
           </div>
           {cartItems.map((item) => {
             const uniqueId = `${item.id}-${item.toppings.map((t: { name: string }) => t.name).join('-')}`;
@@ -80,7 +85,7 @@ export default function OrderConfirmation() {
                 <div className="flex items-center">
                   <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded-lg mr-4" />
                   <div>
-                    <h3 className="font-semibold text-pink">{item.name}</h3>
+                    <h3 className="font-semibold text-lila">{item.name}</h3>
                     {item.toppings.length > 0 && (
                       <div className="mt-1">
                         <p className="text-sm text-gray-600">Toppings:</p>
@@ -110,7 +115,7 @@ export default function OrderConfirmation() {
                     >
                       <Minus className="h-4 w-4" />
                     </button>
-                    <span className="mx-2 text-pink">{item.quantity}</span>
+                    <span className="mx-2 text-lila">{item.quantity}</span>
                     <button
                       className="h-6 w-6 rounded-full bg-[#E9B7E9] text-pink flex items-center justify-center"
                       onClick={() => updateQuantity(uniqueId, 1)}
@@ -118,12 +123,13 @@ export default function OrderConfirmation() {
                       <Plus className="h-4 w-4" />
                     </button>
                   </div>
-                  <p className="font-semibold text-pink pt-2">${(item.price * item.quantity).toFixed(2)}</p>
+                  <p className="font-semibold text-lila pt-2">${(item.price * item.quantity).toFixed(2)}</p>
                 </div>
               </div>
             );
           })}
         </div>
+        
         <div className="border-t border-gray-200 pt-4">
           <div className="flex justify-between mb-2">
             <span className="text-gray-600">Subtotal:</span>
@@ -138,11 +144,12 @@ export default function OrderConfirmation() {
             <span className="font-semibold">${delivery.toFixed(2)}</span>
           </div>
           <div className="flex justify-between mt-4 border-t pt-4">
-            <span className="text-lg font-semibold text-pink">Total:</span>
-            <span className="text-lg font-semibold text-pink">${total.toFixed(2)}</span>
+            <span className="text-lg font-semibold text-lila">Total:</span>
+            <span className="text-lg font-semibold text-lila">${total.toFixed(2)}</span>
           </div>
         </div>
-        <button className="w-full bg-[#E9B7E9] text-pink py-3 rounded-full mt-6 font-semibold transition-colors" onClick={() => window.location.href = '/payment'}>
+        
+        <button className="w-full bg-lila text-white py-3 rounded-full mt-6 font-semibold transition-colors" onClick={() => window.location.href = '/payment'}>
           Place Order
         </button>
       </div>

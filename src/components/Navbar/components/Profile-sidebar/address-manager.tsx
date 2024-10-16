@@ -1,142 +1,174 @@
-'use client'
-
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import { ChevronLeft, Home, Plus, CheckCircle, Circle } from 'lucide-react'
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, Home, CheckCircle, Circle, X } from 'react-feather';
 
 interface Address {
-  id: string
-  name: string
-  address: string
+  id: string;
+  name: string;
+  address: string;
 }
 
 export default function AddressManager() {
-  const navigate = useNavigate(); // Initialize the navigate function
-  const [addresses, setAddresses] = useState<Address[]>([])
-  const [isAddingNew, setIsAddingNew] = useState(false)
-  const [newName, setNewName] = useState('')
-  const [newAddress, setNewAddress] = useState('')
-  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null)
+  const navigate = useNavigate();
+  const [addresses, setAddresses] = useState<Address[]>([]);
+  const [isAddingNew, setIsAddingNew] = useState(false);
+  const [newName, setNewName] = useState('');
+  const [newAddress, setNewAddress] = useState('');
+  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
 
+  // Load addresses and user data from localStorage on component mount
   useEffect(() => {
-    const savedAddresses = localStorage.getItem('addresses')
+    const savedAddresses = localStorage.getItem('addresses');
+    const userData = localStorage.getItem('userData');
+    
     if (savedAddresses) {
-      setAddresses(JSON.parse(savedAddresses))
+      setAddresses(JSON.parse(savedAddresses));
     }
-  }, [])
+
+    // Check if there's already a selected address in userData.user
+    if (userData) {
+      const parsedUserData = JSON.parse(userData);
+      if (parsedUserData.user && parsedUserData.user.selectedAddress) {
+        setSelectedAddressId(parsedUserData.user.selectedAddress.id);
+      }
+    }
+  }, []);
 
   const saveAddresses = (newAddresses: Address[]) => {
-    localStorage.setItem('addresses', JSON.stringify(newAddresses))
-    setAddresses(newAddresses)
-  }
+    localStorage.setItem('addresses', JSON.stringify(newAddresses));
+    setAddresses(newAddresses);
+  };
 
   const addNewAddress = () => {
     if (newName && newAddress) {
-      const newAddressList = [...addresses, { id: Date.now().toString(), name: newName, address: newAddress }]
-      saveAddresses(newAddressList)
-      setNewName('')
-      setNewAddress('')
-      setIsAddingNew(false)
+      const newAddressList = [...addresses, { id: Date.now().toString(), name: newName, address: newAddress }];
+      saveAddresses(newAddressList);
+      setNewName('');
+      setNewAddress('');
+      setIsAddingNew(false);
     }
-  }
+  };
 
   const deleteAddress = (id: string) => {
-    const newAddressList = addresses.filter(addr => addr.id !== id)
-    saveAddresses(newAddressList)
+    const newAddressList = addresses.filter(addr => addr.id !== id);
+    saveAddresses(newAddressList);
     if (id === selectedAddressId) {
-      setSelectedAddressId(null)
+      setSelectedAddressId(null);
+      updateUserData(null);
     }
-  }
+  };
 
   const selectAddress = (id: string) => {
-    if (id === selectedAddressId) {
-      setSelectedAddressId(null)
+    const newSelectedId = id === selectedAddressId ? null : id;
+    setSelectedAddressId(newSelectedId);
+    updateUserData(newSelectedId);
+  };
+
+  // Update userData in localStorage by adding/removing selectedAddress inside user object
+  const updateUserData = (selectedId: string | null) => {
+    const userData = localStorage.getItem('userData');
+    let parsedUserData = userData ? JSON.parse(userData) : { user: {} };
+
+    if (selectedId) {
+      const selectedAddress = addresses.find(addr => addr.id === selectedId);
+      if (selectedAddress) {
+        parsedUserData.user.selectedAddress = selectedAddress;  // Save the entire selected address object
+      }
     } else {
-      setSelectedAddressId(id)
+      delete parsedUserData.user.selectedAddress;  // Remove selectedAddress when none is selected
     }
-  }
+
+    localStorage.setItem('userData', JSON.stringify(parsedUserData));
+  };
 
   const handleBackButtonClick = () => {
     if (isAddingNew) {
-      // If in adding new address mode, switch back to address list
       setIsAddingNew(false);
     } else {
-      // If in address list mode, navigate back
       navigate(-1);
     }
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-vanilla">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-lg overflow-hidden">
-        <header className="bg-vanilla p-4 flex items-center">
-          <button 
-            onClick={handleBackButtonClick} // Use the new handler
-            className="text-lila"
+    <div className="min-h-screen bg-vanilla flex justify-center items-center p-4">
+      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden">
+        <header className="bg-lila p-4 flex items-center">
+          <button
+            onClick={handleBackButtonClick}
+            className="text-white hover:text-lila-light transition-colors"
+            aria-label={isAddingNew ? 'Cancel adding new address' : 'Go back'}
           >
             <ChevronLeft size={24} />
           </button>
-          <h1 className="text-2xl font-bold text-lila flex-grow text-center">
+          <h1 className="text-2xl font-bold text-white flex-grow text-center">
             {isAddingNew ? 'Add New Address' : 'Delivery Address'}
           </h1>
         </header>
 
-        <main className="p-6">
+        <main className="p-6 space-y-4">
           {!isAddingNew ? (
-            <div>
+            <>
               {addresses.map((addr) => (
-                <div 
-                  key={addr.id} 
-                  className={`flex items-center justify-between mb-4 p-3 bg-white rounded-lg shadow-sm cursor-pointer ${addr.id === selectedAddressId ? 'bg-gray-100' : ''}`} 
+                <div
+                  key={addr.id}
+                  className={`flex items-center justify-between p-4 bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 border border-lila-light cursor-pointer ${
+                    addr.id === selectedAddressId ? 'ring-2 ring-lila' : ''
+                  }`}
                   onClick={() => selectAddress(addr.id)}
                 >
-                  <div className="flex items-center">
-                    <Home className="h-6 w-6 text-purple-600 mr-2" />
+                  <div className="flex items-center space-x-3">
+                    <div className="bg-lila bg-opacity-10 p-2 rounded-full">
+                      <Home className="h-5 w-5 text-lila" />
+                    </div>
                     <div>
-                      <h2 className="font-semibold">{addr.name}</h2>
+                      <h2 className="font-semibold text-gray-800">{addr.name}</h2>
                       <p className="text-sm text-gray-600">{addr.address}</p>
                     </div>
                   </div>
-                  <div className="flex items-center">
+                  <div className="flex items-center space-x-2">
                     {addr.id === selectedAddressId ? (
-                      <CheckCircle className="h-6 w-6 text-green-600 mr-2" />
+                      <CheckCircle className="h-5 w-5 text-green-600" />
                     ) : (
-                      <Circle className="h-6 w-6 text-gray-400 mr-2" />
+                      <Circle className="h-5 w-5 text-gray-400" />
                     )}
-                    <button 
-                      onClick={(e) => { e.stopPropagation(); deleteAddress(addr.id); }}
-                      className="p-1 rounded-full hover:bg-purple-100 transition-colors"
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteAddress(addr.id);
+                      }}
+                      className="p-1 rounded-full hover:bg-pink-100 transition-colors"
+                      aria-label={`Delete address for ${addr.name}`}
                     >
-                      <Plus className="h-6 w-6 text-purple-600 rotate-45" />
+                      <X className="h-5 w-5 text-pink" />
                     </button>
                   </div>
                 </div>
               ))}
-              <button 
-                className="w-full py-2 bg-pink text-white rounded-full hover:bg-pink-600 transition-colors"
+              <button
+                className="w-full py-3 bg-pink text-white rounded-full hover:bg-pink-dark transition-colors text-lg font-medium"
                 onClick={() => setIsAddingNew(true)}
               >
                 Add New Address
               </button>
-            </div>
+            </>
           ) : (
-            <div>
+            <div className="space-y-4">
               <input
                 type="text"
                 placeholder="Name"
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
-                className="w-full mb-4 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full p-3 border border-lila-light rounded-lg focus:outline-none focus:ring-2 focus:ring-lila"
               />
               <input
                 type="text"
                 placeholder="Address"
                 value={newAddress}
                 onChange={(e) => setNewAddress(e.target.value)}
-                className="w-full mb-4 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full p-3 border border-lila-light rounded-lg focus:outline-none focus:ring-2 focus:ring-lila"
               />
-              <button 
-                className="w-full py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
+              <button
+                className="w-full py-3 bg-lila text-white rounded-full hover:bg-lila-dark transition-colors text-lg font-medium"
                 onClick={addNewAddress}
               >
                 Apply
@@ -146,5 +178,5 @@ export default function AddressManager() {
         </main>
       </div>
     </div>
-  )
+  );
 }
