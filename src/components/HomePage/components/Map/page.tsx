@@ -1,28 +1,45 @@
 import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { UtensilsCrossed } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
+import L, { DivIcon } from 'leaflet';
 import ReactDOMServer from 'react-dom/server';
-import MarkerCluster from 'react-leaflet-cluster'; // Make sure you use the correct import
-import restaurants from './restaurantList'; // Adjust the path accordingly
+import MarkerCluster from 'react-leaflet-cluster';
+import restaurants from './restaurantList';
 
-const CustomMarker = () => {
+interface Restaurant {
+    id: number;
+    name: string;
+    description: string;
+    averagePrice: string;
+    imageUrl: string;
+    location: {
+      lat: number;
+      lng: number;
+    };
+    rating: number;
+}
+
+interface CustomMarkerProps {
+  averagePrice: string;
+}
+
+const CustomMarker: React.FC<CustomMarkerProps> = ({ averagePrice }) => {
   return (
-    <div className="flex items-center justify-center" style={{ 
+    <div className="flex flex-col items-center justify-center" style={{ 
         width: '40px', 
-        height: '40px', 
-        borderRadius: '50%', 
+        height: '30px', 
+        borderRadius: '20%', 
         backgroundColor: '#ffffff',
         padding: '2px',
-        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)'
-      }}>
-      <UtensilsCrossed size={30} className='text-lila' />
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+        textAlign: 'center'
+    }}>
+      <span style={{ fontSize: '12px', color: '#333' }}>{averagePrice}</span>
     </div>
   );
 };
 
-const createClusterIcon = (cluster: any) => {
+const createClusterIcon = (cluster: L.MarkerCluster): DivIcon => {
   const count = cluster.getChildCount();
   return L.divIcon({
     html: `<div style="background-color: rgba(124, 59, 124, 0.7); border-radius: 50%; padding: 10px; text-align: center; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
@@ -33,7 +50,7 @@ const createClusterIcon = (cluster: any) => {
   });
 };
 
-export default function Map() {
+const Map: React.FC = () => {
   return (
     <div className="w-full h-[500px]">
       <MapContainer center={[51.90243472687174, -8.481868689693755]} zoom={13} className="w-full h-full">
@@ -45,11 +62,15 @@ export default function Map() {
           maxClusterRadius={60}
           iconCreateFunction={createClusterIcon} 
         >
-          {restaurants.map((restaurant) => (
+          {restaurants.map((restaurant: Restaurant) => (
             <Marker 
               key={restaurant.id}
               position={[restaurant.location.lat, restaurant.location.lng]} 
-              icon={L.divIcon({ className: 'custom-icon', html: ReactDOMServer.renderToString(<CustomMarker />), iconSize: [30, 30] })}
+              icon={L.divIcon({ 
+                className: 'custom-icon', 
+                html: ReactDOMServer.renderToString(<CustomMarker averagePrice={restaurant.averagePrice} />), 
+                iconSize: [50, 50] 
+              })}
             >
               <Popup>
                 <div className="max-w-sm bg-white rounded-lg shadow-lg overflow-hidden">
@@ -62,7 +83,7 @@ export default function Map() {
                     <div className="flex justify-between items-center">
                       <h2 className="text-xl font-semibold text-gray-800">{restaurant.name}</h2>
                       <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-lg">
-                        ★ 4.5
+                        ★ {restaurant.rating}
                       </span>
                     </div>
                     <p className="text-gray-600 mt-1">{restaurant.description}</p>
@@ -82,3 +103,5 @@ export default function Map() {
     </div>
   );
 }
+
+export default Map;
