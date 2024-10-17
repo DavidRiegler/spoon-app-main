@@ -60,7 +60,6 @@ export default function AddCard() {
     if (cardExists) {
       setErrorMessage('Card already saved')
     } else {
-      // Generate a unique ID for the new card
       const maxId = savedCards.reduce((max: number, card: any) => 
         card.id > max ? card.id : max, 0
       )
@@ -81,37 +80,47 @@ export default function AddCard() {
 
   return (
     <div className="min-h-screen bg-vanilla flex flex-col">
-      <header className="bg-vanilla p-4 flex items-center">
+      <header className="bg-vanilla p-2 sm:p-4 flex items-center">
         <button onClick={() => navigate(-1)} className="text-lila">
-          <ChevronLeft size={36} />
+          <ChevronLeft size={24} className="sm:w-9 sm:h-9" />
         </button>
       </header>
-      <div className="flex-grow flex flex-col items-center justify-center px-4">
+      <div className="flex-grow flex flex-col items-center justify-center px-4 py-4 sm:py-8">
         <div className="w-full max-w-md">
-          <h1 className="text-3xl font-bold text-lila flex-grow text-center mr-9 mb-6">
+          <h1 className="text-2xl sm:text-3xl font-bold text-lila text-center mb-4 sm:mb-6">
             Add Card
           </h1>
-          <div className="bg-lila text-white rounded-2xl p-6 mb-6 shadow-lg h-60 relative mx-8">
-            <div className='bg-black w-s h-8 mb-4 -mx-6'></div>
-            <div className='text-xs'>Card Number</div>
-            <div className="text-2xl mb-4">{cardDetails.cardNumber || '0000 0000 0000 0000'}</div>
-            <div className="flex justify-between">
-              <div className='absolute left-6 bottom-6'>
-                <div className="text-xs">Card Holder Name</div>
-                <div>{cardDetails.cardHolderName || 'John Smith'}</div>
+          <div className="bg-lila text-white rounded-2xl shadow-lg relative mx-auto mb-6 w-[300px] h-[180px] sm:w-[360px] sm:h-[220px] md:w-[400px] md:h-[240px]">
+            <div className="absolute top-6 left-0 right-0 bg-black h-8 sm:h-10"></div>
+            <div className="absolute inset-0 p-4 sm:p-6 flex flex-col justify-between">
+              <div className="mt-12 sm:mt-16">
+                <div className="text-[10px] sm:text-xs opacity-80">Card Number</div>
+                <div className="font-mono text-lg sm:text-2xl tracking-wider">
+                  {cardDetails.cardNumber || '0000 0000 0000 0000'}
+                </div>
               </div>
-              <div className='absolute right-6 bottom-6'>
-                <div className="text-xs">Expiry Date</div>
-                <div>{cardDetails.expiryDate || '04/28'}</div>
+            </div>
+            <div className="absolute bottom-4 w-full px-4 sm:px-6 flex justify-between items-end">
+              <div>
+                <div className="text-[10px] sm:text-xs opacity-80">Card Holder Name</div>
+                <div className="text-sm sm:text-base font-medium truncate max-w-[150px] sm:max-w-[200px]">
+                  {cardDetails.cardHolderName || 'John Smith'}
+                </div>
+              </div>
+              <div>
+                <div className="text-[10px] sm:text-xs opacity-80 text-right">Expiry Date</div>
+                <div className="text-sm sm:text-base font-medium">
+                  {cardDetails.expiryDate || '04/28'}
+                </div>
               </div>
             </div>
           </div>
           {errorMessage && (
-            <div className="text-red-500 mb-4 text-center">{errorMessage}</div>
+            <div className="text-red-500 mb-4 text-center text-sm sm:text-base">{errorMessage}</div>
           )}
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4 px-4 sm:px-0">
             <div>
-              <label htmlFor="cardHolderName" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="cardHolderName" className="block text-xs sm:text-sm font-medium text-gray-700">
                 Card holder name
               </label>
               <input
@@ -120,12 +129,12 @@ export default function AddCard() {
                 name="cardHolderName"
                 value={cardDetails.cardHolderName}
                 onChange={handleInputChange}
-                className="mt-1 block w-full px-3 py-2 bg-[#FFF9D4] border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#D8A7B1] focus:border-[#D8A7B1]"
+                className="mt-1 block w-full px-3 py-2 bg-[#FFF9D4] border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#D8A7B1] focus:border-[#D8A7B1] text-sm sm:text-base"
                 required
               />
             </div>
             <div>
-              <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="cardNumber" className="block text-xs sm:text-sm font-medium text-gray-700">
                 Card Number
               </label>
               <input
@@ -134,13 +143,13 @@ export default function AddCard() {
                 name="cardNumber"
                 value={cardDetails.cardNumber}
                 onChange={handleInputChange}
-                className="mt-1 block w-full px-3 py-2 bg-[#FFF9D4] border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#D8A7B1] focus:border-[#D8A7B1]"
+                className="mt-1 block w-full px-3 py-2 bg-[#FFF9D4] border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#D8A7B1] focus:border-[#D8A7B1] text-sm sm:text-base"
                 required
               />
             </div>
             <div className="flex space-x-4">
               <div className="flex-1">
-                <label htmlFor="expiryDate" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="expiryDate" className="block text-xs sm:text-sm font-medium text-gray-700">
                   Expiry Date
                 </label>
                 <input
@@ -150,12 +159,12 @@ export default function AddCard() {
                   value={cardDetails.expiryDate}
                   onChange={handleInputChange}
                   placeholder="MM/YY"
-                  className="mt-1 block w-full px-3 py-2 bg-[#FFF9D4] border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#D8A7B1] focus:border-[#D8A7B1]"
+                  className="mt-1 block w-full px-3 py-2 bg-[#FFF9D4] border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#D8A7B1] focus:border-[#D8A7B1] text-sm sm:text-base"
                   required
                 />
               </div>
               <div className="flex-1">
-                <label htmlFor="cvv" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="cvv" className="block text-xs sm:text-sm font-medium text-gray-700">
                   CVV
                 </label>
                 <input
@@ -164,14 +173,14 @@ export default function AddCard() {
                   name="cvv"
                   value={cardDetails.cvv}
                   onChange={handleInputChange}
-                  className="mt-1 block w-full px-3 py-2 bg-[#FFF9D4] border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#D8A7B1] focus:border-[#D8A7B1]"
+                  className="mt-1 block w-full px-3 py-2 bg-[#FFF9D4] border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#D8A7B1] focus:border-[#D8A7B1] text-sm sm:text-base"
                   required
                 />
               </div>
             </div>
             <button
               type="submit"
-              className="w-full bg-lila text-white py-3 rounded-full font-semibold hover:bg-[#7D3A57] transition-colors"
+              className="w-full bg-lila text-white py-2.5 sm:py-3 rounded-full font-semibold hover:bg-[#7D3A57] transition-colors text-sm sm:text-base mt-6"
             >
               Save Card
             </button>

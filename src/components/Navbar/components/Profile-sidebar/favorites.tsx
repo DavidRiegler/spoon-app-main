@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import Categories from '../../../Food/components/categories';
@@ -22,17 +22,15 @@ interface Item {
 }
 
 const allItems: Item[] = [
-  // The items array (unchanged from your initial code)
 ];
 
 export default function Sort() {
   const [favorites, setFavorites] = useState<Item[]>([]);
   const [sortOption, setSortOption] = useState<string>('priceAsc');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [itemsToShow, setItemsToShow] = useState<number>(6); // State to manage number of items shown
+  const [itemsToShow, setItemsToShow] = useState<number>(6); 
   const navigate = useNavigate();
 
-  // Load favorite items from localStorage on component mount
   useEffect(() => {
     const storedFavorites = localStorage.getItem('favoriteFood');
     if (storedFavorites) {
@@ -40,21 +38,18 @@ export default function Sort() {
     }
   }, []);
 
-  // Toggle favorite status for an item
   const toggleFavorite = (id: number) => {
     setFavorites((prevFavorites) => {
       const updatedFavorites = prevFavorites.some((item) => item.id === id)
         ? prevFavorites.filter((item) => item.id !== id)
         : [...prevFavorites, allItems.find((item) => item.id === id)!];
 
-      // Update localStorage with the updated favorites
       localStorage.setItem('favoriteFood', JSON.stringify(updatedFavorites));
 
       return updatedFavorites;
     });
   };
 
-  // Filter items by the selected category and sort them based on the selected option
   const filteredAndSortedItems = () => {
     return favorites
       .filter((item) => selectedCategory === 'All' || item.categories.includes(selectedCategory))
@@ -81,7 +76,7 @@ export default function Sort() {
   };
 
   const handleLoadMore = () => {
-    setItemsToShow((prev) => prev + 6); // Increase the number of items shown by 6
+    setItemsToShow((prev) => prev + 6); 
   };
 
   return (
@@ -91,17 +86,17 @@ export default function Sort() {
         <div className="bg-pink rounded-b-xl">
           <div className="bg-white pt-4 px-4 pb-4 rounded-t-xl rounded-b-xl">
             <div className="flex items-center justify-center p-4">
-              <h1 className="text-burnt text-5xl font-bold">Favorites</h1>
+              <h1 className="text-burnt text-3xl sm:text-4xl md:text-5xl font-bold">Favorites</h1>
             </div>
             <div className="min-h-screen">
               <Categories selectedCategory={selectedCategory} onCategorySelect={setSelectedCategory} />
               <div className="mx-auto px-4">
-                <div className="flex items-center mb-8">
-                  Sort by:
+                <div className="flex flex-col sm:flex-row sm:items-center mb-6 sm:mb-8">
+                  <span className="mb-2 sm:mb-0">Sort by:</span>
                   <select
                     onChange={(e) => setSortOption(e.target.value)}
                     value={sortOption}
-                    className="text-lila ml-2"
+                    className="text-lila w-full sm:w-auto"
                   >
                     <option value="priceAsc">Price Ascending</option>
                     <option value="priceDesc">Price Descending</option>
@@ -111,33 +106,33 @@ export default function Sort() {
                   </select>
                 </div>
                 {favorites.length > 0 ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                     {filteredAndSortedItems()
                       .slice(0, itemsToShow)
                       .map((item) => (
                         <div key={item.id} className="bg-white rounded-3xl shadow-lg overflow-hidden">
                           <div className="relative">
-                            <img src={item.image} alt={item.name} className="h-64 w-full object-cover" />
+                            <img src={item.image} alt={item.name} className="h-48 sm:h-64 w-full object-cover" />
                             <div className="bg-white bg-opacity-100 rounded-full p-1 px-2 flex items-center absolute top-2 left-2">
-                              <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                              <span className="ml-1 text-sm font-bold text-burnt">
+                              <Star className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 fill-current" />
+                              <span className="ml-1 text-xs sm:text-sm font-bold text-burnt">
                                 {item.rating.toFixed(1)}
                               </span>
                             </div>
                             <button
                               onClick={() => toggleFavorite(item.id)}
-                              className="absolute top-2 right-2 text-xl"
+                              className="absolute top-2 right-2 text-lg sm:text-xl"
                             >
                               {favorites.some((fav) => fav.id === item.id) ? '💜' : '🤍'}
                             </button>
-                            <div className="absolute bottom-2 left-2 bg-pink text-white rounded-full px-3 py-1 text-sm font-bold">
+                            <div className="absolute bottom-2 left-2 bg-pink text-white rounded-full px-2 sm:px-3 py-1 text-xs sm:text-sm font-bold">
                               ${item.price.toFixed(2)}
                             </div>
                           </div>
-                          <div className="p-4 flex justify-between">
-                            <h2 className="text-xl font-bold mb-2">{item.name}</h2>
+                          <div className="p-3 sm:p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                            <h2 className="text-lg sm:text-xl font-bold mb-2 sm:mb-0">{item.name}</h2>
                             <button
-                              className="bg-pink rounded-full p-2 text-white font-bold"
+                              className="bg-pink rounded-full p-2 text-white font-bold text-xs sm:text-sm mt-2 sm:mt-0"
                               onClick={() => handleItemClick(item)}
                             >
                               Find Out More
@@ -147,11 +142,11 @@ export default function Sort() {
                       ))}
                   </div>
                 ) : (
-                  <p className="text-center text-xl font-bold">No favorites selected yet.</p>
+                  <p className="text-center text-lg sm:text-xl font-bold">No favorites selected yet.</p>
                 )}
                 {itemsToShow < filteredAndSortedItems().length && (
-                  <div className="flex justify-center mt-4">
-                    <button onClick={handleLoadMore} className="bg-pink text-white font-bold px-4 py-2 rounded-full">
+                  <div className="flex justify-center mt-6 sm:mt-8">
+                    <button onClick={handleLoadMore} className="bg-pink text-white font-bold px-4 py-2 rounded-full text-sm sm:text-base">
                       Load More
                     </button>
                   </div>

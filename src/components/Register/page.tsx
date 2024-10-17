@@ -69,9 +69,9 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-burnt">
-      <div className="bg-snow p-10 rounded-lg shadow-md w-[800px] flex">
-        <div className="w-1/2 pr-8">
+    <div className="min-h-screen flex items-center justify-center bg-burnt p-4">
+      <div className="bg-snow p-6 sm:p-10 rounded-lg shadow-md w-full max-w-4xl flex flex-col lg:flex-row">
+        <div className="lg:w-1/2 lg:pr-8 mb-8 lg:mb-0">
           <div className='flex items-center mb-8'>
             <a href="/" className="flex items-center">
               <ChevronLeft className="w-6 h-6 text-lila" />
@@ -81,8 +81,8 @@ export default function RegisterPage() {
             <div className="mb-4 text-red-500">{errorMessage}</div>
           )}
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="flex space-x-4">
-              <div className="w-1/2">
+            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+              <div className="w-full sm:w-1/2">
                 <label htmlFor="name" className="block text-sm font-medium text-lila mb-1">
                   Name
                 </label>
@@ -96,7 +96,7 @@ export default function RegisterPage() {
                     focus:outline-none focus:border-lila focus:ring-1 focus:ring-lila"
                 />
               </div>
-              <div className="w-1/2">
+              <div className="w-full sm:w-1/2">
                 <label htmlFor="surname" className="block text-sm font-medium text-lila mb-1">
                   Surname
                 </label>
@@ -199,8 +199,8 @@ export default function RegisterPage() {
             </Link>
           </div>
         </div>
-        <div className="w-1/2 rounded-lg flex items-center justify-center">
-          <img src={SpoonAppLogo} alt="SpoonApp Logo" className="w-full h-auto" />
+        <div className="lg:w-1/2 rounded-lg flex items-center justify-center">
+          <img src={SpoonAppLogo} alt="SpoonApp Logo" className="w-full h-auto max-w-xs lg:max-w-full" />
         </div>
       </div>
     </div>

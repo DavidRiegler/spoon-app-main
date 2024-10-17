@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { ChevronLeft, Heart, Minus, Plus, ShoppingCart, Star, Dot } from 'lucide-react'
 
@@ -68,21 +68,21 @@ export default function FoodDetails() {
   )
 
   return (
-    <div className="bg-vanilla min-h-screen flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl shadow-lg p-6 w-full max-w-4xl mx-auto">
+    <div className="bg-vanilla min-h-screen flex items-center justify-center p-2 sm:p-4">
+      <div className="bg-white rounded-3xl shadow-lg p-3 sm:p-6 w-full max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center">
+          <div className="flex items-center flex-wrap">
             <button className="text-lila mr-2" onClick={() => navigate(-1)}>
-              <ChevronLeft size={24} />
+              <ChevronLeft size={20} />
             </button>
-            <h1 className="text-2xl font-bold text-lila">{item.name}</h1>
-            <Dot size={25} className='text-lila'/>
+            <h1 className="text-xl sm:text-2xl font-bold text-lila">{item.name}</h1>
+            <Dot size={20} className='text-lila'/>
             <button onClick={() => navigate(`/restaurant/${item.restaurantId}`)}>
-              <h1 className="text-2xl font-bold text-lila">{item.restaurantName}</h1>
+              <h1 className="text-xl sm:text-2xl font-bold text-lila">{item.restaurantName}</h1>
             </button>
           </div>
           <button onClick={() => setIsFavorite(!isFavorite)}>
-            <Heart size={24} fill={isFavorite ? 'purple' : 'none'} color={isFavorite ? 'purple' : 'black'} />
+            <Heart size={20} fill={isFavorite ? 'purple' : 'none'} color={isFavorite ? 'purple' : 'black'} />
           </button>
         </div>
 
@@ -93,7 +93,7 @@ export default function FoodDetails() {
 
         <div className="flex flex-col md:flex-row">
           <div className="w-full md:w-1/2 pr-0 md:pr-4 mb-4 md:mb-0">
-            <div className="aspect-w-16 aspect-h-9 mb-4 h-80">
+            <div className="aspect-w-16 aspect-h-9 mb-4 h-48 sm:h-64 md:h-80">
               <img 
                 src={item.image} 
                 alt={item.name} 
@@ -125,38 +125,40 @@ export default function FoodDetails() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mb-4 grid grid-cols-3 gap-4"> 
-          <span className="text-2xl font-bold">${totalPrice.toFixed(2)}</span>
-          <div className="flex items-center justify-center col-span-1"> 
-            <div className="flex items-center ml-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-4"> 
+          <span className="text-xl sm:text-2xl font-bold order-1 sm:order-none">${totalPrice.toFixed(2)}</span>
+          <div className="flex items-center justify-center order-2 sm:order-none"> 
+            <div className="flex items-center">
               <button 
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="bg-gray-200 rounded-full p-2"
+                className="bg-gray-200 rounded-full p-1.5 sm:p-2"
               >
-                <Minus size={16} />
+                <Minus size={14} />
               </button>
-              <span className="mx-4 text-xl">{quantity}</span>
+              <span className="mx-3 sm:mx-4 text-lg sm:text-xl">{quantity}</span>
               <button 
                 onClick={() => setQuantity(quantity + 1)}
-                className="bg-gray-200 rounded-full p-2"
+                className="bg-gray-200 rounded-full p-1.5 sm:p-2"
               >
-                <Plus size={16} />
+                <Plus size={14} />
               </button>
             </div>
           </div>
-          <button className="bg-lila text-white rounded-full py-2 px-6 flex items-center w-2/3 justify-center col-span-1"  onClick={() => addToCart({ 
-            id: item.id, 
-            name: item.name, 
-            price: totalPrice, 
-            quantity, 
-            toppings: toppings.filter(topping => topping.selected),
-            image: item.image 
-            })}>
-            <ShoppingCart className="mr-2"/>
+          <button className="bg-lila text-white rounded-full py-2 px-4 sm:px-6 flex items-center justify-center w-full sm:w-auto order-3 sm:order-none" 
+            onClick={() => addToCart({ 
+              id: item.id, 
+              name: item.name, 
+              price: totalPrice, 
+              quantity, 
+              toppings: toppings.filter(topping => topping.selected),
+              image: item.image 
+            })}
+          >
+            <ShoppingCart className="mr-2" size={16}/>
             Add to Cart
           </button>
         </div>
       </div>
     </div>
-  )
+  );
 }

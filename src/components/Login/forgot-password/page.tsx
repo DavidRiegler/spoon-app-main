@@ -56,9 +56,9 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-burnt">
-      <div className="bg-snow p-10 rounded-lg shadow-md w-[800px] flex">
-        <div className="w-1/2 pr-8">
+    <div className="min-h-screen flex items-center justify-center bg-burnt p-4">
+      <div className="bg-snow p-6 sm:p-10 rounded-lg shadow-md w-full max-w-4xl flex flex-col lg:flex-row">
+        <div className="lg:w-1/2 lg:pr-8 mb-8 lg:mb-0">
           <div className='flex items-center mb-8'>
             <a href="/" className="flex items-center">
               <ChevronLeft className="w-6 h-6 text-lila" />
@@ -73,7 +73,7 @@ export default function ForgotPasswordPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-lila mb-1">
-                Neues Passwort
+                New Password
               </label>
               <input
                 type="password"
@@ -87,7 +87,7 @@ export default function ForgotPasswordPage() {
             </div>
             <div>
               <label htmlFor="confirm-password" className="block text-sm font-medium text-lila mb-1">
-                Passwort bestätigen
+                Confirm Password
               </label>
               <input
                 type="password"
@@ -108,14 +108,14 @@ export default function ForgotPasswordPage() {
             </button>
           </form>
           <div className="mt-4 text-center text-sm text-lila">
-            Zurück zur{' '}
+            Back to{' '}
             <Link to="/login" className="font-medium hover:underline">
-              Anmeldung
+              Login
             </Link>
           </div>
         </div>
-        <div className="w-1/2 rounded-lg flex items-center justify-center">
-          <img src={SpoonAppLogo} alt="SpoonApp Logo" className="w-full h-auto" />
+        <div className="lg:w-1/2 rounded-lg flex items-center justify-center">
+          <img src={SpoonAppLogo} alt="SpoonApp Logo" className="w-full h-auto max-w-xs lg:max-w-full" />
         </div>
       </div>
     </div>

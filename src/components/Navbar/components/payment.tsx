@@ -222,18 +222,18 @@ export default function Payment() {
     };
 
     return (
-        <div className="bg-vanilla min-h-screen p-5">
-            <div className="max-w-2xl mx-auto bg-white rounded-3xl p-6 shadow-lg">
-                <div className="flex justify-between items-center mb-6">
-                    <ArrowLeft 
-                        className="text-lila hover:cursor-pointer" 
-                        size={24} 
-                        onClick={() => window.location.href = '/checkout'}
-                    />
-                    <h1 className="text-lila text-2xl font-bold">Payment</h1>
-                    <div className="flex gap-3">
-                    </div>
-                </div>
+        <div className="bg-vanilla min-h-screen p-4 sm:p-5">
+          <div className="max-w-2xl mx-auto bg-white rounded-3xl p-4 sm:p-6 shadow-lg">
+            <div className="flex justify-between items-center mb-4 sm:mb-6">
+              <ArrowLeft 
+                className="text-lila hover:cursor-pointer" 
+                size={20} 
+                onClick={() => window.location.href = '/checkout'}
+              />
+              <h1 className="text-lila text-xl sm:text-2xl font-bold">Payment</h1>
+              <div className="flex gap-3">
+              </div>
+            </div>
 
                 <div className="mb-6 border-t-2 pt-4">
                     <div className="flex justify-between items-center mb-3">
@@ -297,7 +297,7 @@ export default function Payment() {
                     </div>
 
                     <button 
-                        className="w-full bg-lila border-none rounded-full py-4 text-white text-lg font-bold"
+                        className="w-full bg-lila border-none rounded-full py-3 sm:py-4 text-white text-base sm:text-lg font-bold"
                         onClick={handlePayNow}
                     >
                         Pay Now

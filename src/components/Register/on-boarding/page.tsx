@@ -41,8 +41,8 @@ export default function OnboardingCards() {
   const currentData = onboardingData[currentCard]
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-snow py-8">
-      <div className="relative bg-snow rounded-lg shadow-md w-[90vw] h-[90vh] max-w-6xl max-h-[800px] overflow-hidden flex flex-col justify-between drop-shadow-2xl">
+    <div className="flex items-center justify-center min-h-screen bg-snow py-8 px-4">
+      <div className="relative bg-snow rounded-lg shadow-md w-full max-w-6xl h-[90vh] max-h-[800px] overflow-hidden flex flex-col justify-between drop-shadow-2xl">
         <img
           src={currentData.image}
           alt={currentData.title}
@@ -50,36 +50,36 @@ export default function OnboardingCards() {
         />
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <button
-          className="absolute top-6 right-6 px-6 py-3 text-white bg-black bg-opacity-50 rounded-full hover:bg-opacity-75 transition-colors text-lg z-20 hover:cursor-pointer"
+          className="absolute top-4 right-4 sm:top-6 sm:right-6 px-4 py-2 sm:px-6 sm:py-3 text-white bg-black bg-opacity-50 rounded-full hover:bg-opacity-75 transition-colors text-base sm:text-lg z-20 hover:cursor-pointer"
           onClick={handleSkip}
         >
           Skip
         </button>
-        <div className="relative z-10 flex flex-col items-center justify-center flex-grow text-white text-center px-8">
-          <div className="text-8xl mb-6">{currentData.icon}</div>
-          <h2 className="text-4xl font-bold mb-4">{currentData.title}</h2>
-          <p className="text-xl mb-8 max-w-2xl">{currentData.description}</p>
+        <div className="relative z-10 flex flex-col items-center justify-center flex-grow text-white text-center px-4 sm:px-8">
+          <div className="text-6xl sm:text-8xl mb-4 sm:mb-6">{currentData.icon}</div>
+          <h2 className="text-2xl sm:text-4xl font-bold mb-2 sm:mb-4">{currentData.title}</h2>
+          <p className="text-lg sm:text-xl mb-6 sm:mb-8 max-w-2xl">{currentData.description}</p>
           {currentCard < onboardingData.length - 1 ? (
             <button
-              className="px-10 py-3 bg-lila text-white rounded-full text-xl hover:bg-opacity-90 transition-colors"
+              className="px-8 py-2 sm:px-10 sm:py-3 bg-lila text-white rounded-full text-lg sm:text-xl hover:bg-opacity-90 transition-colors"
               onClick={handleNext}
             >
               Next
             </button>
           ) : (
             <button
-              className="px-10 py-3 bg-lila text-white rounded-full text-xl hover:bg-opacity-90 transition-colors"
+              className="px-8 py-2 sm:px-10 sm:py-3 bg-lila text-white rounded-full text-lg sm:text-xl hover:bg-opacity-90 transition-colors"
               onClick={handleSkip}
             >
               Get started
             </button>
           )}
         </div>
-        <div className="absolute bottom-8 left-0 right-0 flex justify-center space-x-2 z-20">
+        <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 flex justify-center space-x-2 z-20">
           {onboardingData.map((_, index) => (
             <div
               key={index}
-              className={`h-1 w-16 rounded-full ${
+              className={`h-1 w-12 sm:w-16 rounded-full ${
                 index === currentCard ? 'bg-lila' : 'bg-white bg-opacity-50'
               }`}
             ></div>

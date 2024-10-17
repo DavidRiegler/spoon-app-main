@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { Heart, ShoppingCart, User } from 'lucide-react'
+import { Heart, ShoppingCart, User, Menu } from 'lucide-react'
 import CartSidebar from './components/cart-sidebar'
 import ProfileSidebar from './components/profile-sidebar'
 
@@ -9,6 +9,7 @@ export default function Navbar() {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isProfileOpen, setIsProfileOpen] = useState(false)
   const [cartItems, setCartItems] = useState<any[]>([])
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   useEffect(() => {
     const storedCartItems = JSON.parse(localStorage.getItem('cartItems') || '[]')
@@ -28,16 +29,19 @@ export default function Navbar() {
 
   const toggleCart = () => setIsCartOpen(!isCartOpen)
   const toggleProfile = () => setIsProfileOpen(!isProfileOpen)
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
 
   const currentPath = typeof window !== 'undefined' ? window.location.pathname : ''
+
+  const navItems = ['Homepage', 'Food', 'Dating', 'Game', 'Socials']
 
   return (
     <div className="flex flex-col bg-vanilla">
       <nav className="px-4 py-2">
         <div className="max-w-7xl mx-auto flex flex-col items-center">
-          <h1 className="text-4xl font-bold text-[#e57e60] mb-4 mt-4">Spoon It If You Like It</h1>
-          <div className="w-full flex justify-between items-center">
-            <div className="relative flex-grow max-w-md mx-auto"> 
+          <h1 className="text-2xl sm:text-4xl font-bold text-[#e57e60] mb-4 mt-4 text-center">Spoon It If You Like It</h1>
+          <div className="w-full flex flex-col sm:flex-row justify-between items-center">
+            <div className="relative flex-grow max-w-md mx-auto w-full sm:w-auto mb-4 sm:mb-0"> 
               <input
                 type="text"
                 placeholder="Search"
@@ -47,8 +51,8 @@ export default function Navbar() {
                 🔍
               </button>
             </div>
-            <div className="flex items-center space-x-4 -ml-36">
-            <button className="text-burnt" onClick={() => window.location.href = '/favorites'}>
+            <div className="flex items-center space-x-4 mt-4 sm:mt-0">
+              <button className="text-burnt" onClick={() => window.location.href = '/favorites'}>
                 <Heart className="h-10 w-10 bg-white p-2 rounded-lg" />
               </button>
               <button className="text-burnt" onClick={toggleCart}>
@@ -62,22 +66,29 @@ export default function Navbar() {
         </div>
       </nav>
       <div className="bg-pink mt-2 rounded-t-xl">
-        <div className="max-w-7xl mx-auto flex justify-between">
-          {['Homepage', 'Food', 'Dating', 'Game', 'Socials'].map((item) => {
-            const path = `/${item.toLowerCase()}`
-            const isActive = currentPath === path || (item === 'Homepage' && currentPath === '/')
-            return (
-              <a
-                key={item}
-                href={path}
-                className={`flex-1 py-3 px-6 text-center font-bold text-xl ${
-                  isActive ? 'bg-white text-pink rounded-t-xl' : 'text-vanilla'
-                }`}
-              >
-                {item}
-              </a>
-            )
-          })}
+        <div className="max-w-7xl mx-auto">
+          <div className="sm:hidden">
+            <button onClick={toggleMenu} className="w-full py-3 px-6 text-center font-bold text-xl text-vanilla flex items-center justify-center">
+              <Menu className="mr-2" /> Menu
+            </button>
+          </div>
+          <div className={`sm:flex justify-between ${isMenuOpen ? 'block' : 'hidden'}`}>
+            {navItems.map((item) => {
+              const path = `/${item.toLowerCase()}`
+              const isActive = currentPath === path || (item === 'Homepage' && currentPath === '/')
+              return (
+                <a
+                  key={item}
+                  href={path}
+                  className={`block sm:flex-1 py-3 px-6 text-center font-bold text-xl ${
+                    isActive ? 'bg-white text-pink sm:rounded-t-xl' : 'text-vanilla'
+                  }`}
+                >
+                  {item}
+                </a>
+              )
+            })}
+          </div>
         </div>
       </div>
       <CartSidebar isOpen={isCartOpen} onClose={toggleCart} cartItems={cartItems} setCartItems={setCartItems} />

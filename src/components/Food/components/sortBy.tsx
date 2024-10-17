@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import Categories from './categories';
@@ -189,13 +189,13 @@ export default function Sort() {
   return (
     <div className="min-h-screen">
       <Categories selectedCategory={selectedCategory} onCategorySelect={setSelectedCategory} />
-      <div className="mx-auto px-4">
-        <div className="flex items-center mb-8">
-          Sort by:
+      <div className="mx-auto px-2 sm:px-4">
+        <div className="flex items-center mb-4 sm:mb-8">
+          <span className="text-sm sm:text-base">Sort by:</span>
           <select
             onChange={(e) => setSortOption(e.target.value)}
             value={sortOption}
-            className="text-lila ml-2"
+            className="text-lila ml-2 text-sm sm:text-base"
           >
             <option value="priceAsc">Price Ascending</option>
             <option value="priceDesc">Price Descending</option>
@@ -204,45 +204,47 @@ export default function Sort() {
             <option value="rating">Rating</option>
           </select>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
           {filteredAndSortedItems()
             .slice(0, itemsToShow)
             .map((item) => (
-              <button 
-                key={item.id} 
-                className="bg-white rounded-3xl shadow-lg overflow-hidden w-full text-left" 
-                onClick={() => handleItemClick(item)}
-              >
+              <div key={item.id} className="bg-white rounded-2xl sm:rounded-3xl shadow-lg overflow-hidden">
                 <div className="relative">
-                  <img src={item.image} alt={item.name} className="h-64 w-full object-cover" />
+                  <img src={item.image} alt={item.name} className="h-48 sm:h-64 w-full object-cover" />
                   <div className="bg-white bg-opacity-100 rounded-full p-1 px-2 flex items-center absolute top-2 left-2">
-                    <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                    <span className="ml-1 text-sm font-bold text-burnt">
+                    <Star className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 fill-current" />
+                    <span className="ml-1 text-xs sm:text-sm font-bold text-burnt">
                       {item.rating.toFixed(1)}
                     </span>
                   </div>
-                  <button onClick={() => toggleFavorite(item.id)} className="absolute top-2 right-2 text-xl">
+                  <button 
+                    onClick={() => toggleFavorite(item.id)} 
+                    className="absolute top-2 right-2 text-lg sm:text-xl"
+                  >
                     {favorites.includes(item.id) ? '💜' : '🤍'}
                   </button>
-                  <div className="absolute bottom-2 left-2 bg-pink text-white rounded-full px-3 py-1 text-sm font-bold">
+                  <div className="absolute bottom-2 left-2 bg-pink text-white rounded-full px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm font-bold">
                     ${item.price.toFixed(2)}
                   </div>
                 </div>
-                <div className="p-4 flex justify-between">
-                  <h2 className="text-xl font-bold mb-2">{item.name}</h2>
+                <div className="p-3 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                  <h2 className="text-lg sm:text-xl font-bold">{item.name}</h2>
                   <button
-                    className="bg-pink rounded-full p-2 text-white font-bold"
+                    className="bg-pink rounded-full p-1.5 sm:p-2 text-white font-bold text-sm sm:text-base w-full sm:w-auto"
                     onClick={() => handleItemClick(item)}
                   >
                     Find Out More
                   </button>
                 </div>
-              </button>
+              </div>
             ))}
         </div>
         {itemsToShow < filteredAndSortedItems().length && (
           <div className="flex justify-center mt-4">
-            <button onClick={handleLoadMore} className="bg-pink text-white font-bold px-4 py-2 rounded-full">
+            <button 
+              onClick={handleLoadMore} 
+              className="bg-pink text-white font-bold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-sm sm:text-base"
+            >
               Load More
             </button>
           </div>

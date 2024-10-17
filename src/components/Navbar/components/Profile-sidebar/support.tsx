@@ -111,17 +111,18 @@ export default function Support() {
 
   return (
     <div className="bg-vanilla min-h-screen">
-      <main className="mx-auto px-4 py-4 w-2/3">
+      <main className="mx-auto px-2 md:px-4 py-2 md:py-4 w-full md:w-2/3 lg:w-1/2">
         <div className='bg-pink-200 rounded-b-xl'>
           <div className='bg-white pt-1 pb-1 rounded-b-xl'>
-            <div className="bg-white flex flex-col" style={{ height: '94vh' }}>
-              <div className="bg-white p-4 flex items-center space-x-4">
+            <div className="bg-white flex flex-col h-[92vh] md:h-[94vh]">
+              <div className="bg-white p-3 md:p-4 flex items-center space-x-2 md:space-x-4">
                 <button onClick={() => window.history.back()}>
-                  <ArrowLeft className="text-lila" />
+                  <ArrowLeft className="text-lila w-5 h-5 md:w-6 md:h-6" />
                 </button>
-                <h2 className="text-xl font-semibold text-lila flex-grow text-center">Support</h2>
+                <h2 className="text-lg md:text-xl font-semibold text-lila flex-grow text-center">Support</h2>
               </div>
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              
+              <div className="flex-1 overflow-y-auto p-3 md:p-4 space-y-3 md:space-y-4">
                 {messages.map((message, index) => (
                   <div
                     key={index}
@@ -129,34 +130,35 @@ export default function Support() {
                     ref={index === messages.length - 1 ? lastMessageRef : null}
                   >
                     <div
-                      className={`rounded-2xl p-3 max-w-[70%] ${
+                      className={`rounded-2xl p-2 md:p-3 max-w-[80%] md:max-w-[70%] ${
                         message.sender === 'user'
                           ? 'bg-vanilla text-black'
                           : 'bg-white border border-pink-200 text-black'
                       }`}
                     >
-                      <p className="whitespace-pre-wrap">{message.text}</p>
-                      <div className="text-xs text-gray-500 mt-1">
+                      <p className="whitespace-pre-wrap text-sm md:text-base">{message.text}</p>
+                      <div className="text-[10px] md:text-xs text-gray-500 mt-1">
                         {formatTime(message.timestamp)}
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
+
               <form onSubmit={handleSendMessage} className="bg-pink-200 p-2">
-                <div className="flex items-center space-x-2 rounded-full p-2">
+                <div className="flex items-center space-x-2 rounded-full p-1.5 md:p-2">
                   <input
                     type="text"
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
                     placeholder="Write Here..."
-                    className="flex-1 bg-gray-200 p-2 placeholder:font-semibold rounded-full focus:outline-none"
+                    className="flex-1 bg-gray-200 p-2 text-sm md:text-base placeholder:font-semibold rounded-full focus:outline-none"
                   />
                   <button
                     type="submit"
-                    className="bg-white text-pink rounded-full p-2 focus:outline-none"
+                    className="bg-white text-pink rounded-full p-1.5 md:p-2 focus:outline-none"
                   >
-                    <Send size={22} />
+                    <Send size={20} className="md:w-6 md:h-6" />
                   </button>
                 </div>
               </form>
@@ -165,5 +167,5 @@ export default function Support() {
         </div>
       </main>
     </div>
-  )
+  );
 }

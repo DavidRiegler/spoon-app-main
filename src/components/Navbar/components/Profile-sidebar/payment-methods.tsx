@@ -89,29 +89,29 @@ export default function PaymentMethods() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center flex-col bg-vanilla relative">
-      <header className="flex items-center mb-6 w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center flex-col bg-vanilla relative p-4">
+      <header className="flex items-center mb-4 sm:mb-6 w-full max-w-md lg:max-w-lg xl:max-w-xl">
         <button onClick={() => navigate(-1)} className="top-4 left-4">
-          <ChevronLeft className="text-lila" size={36} />
+          <ChevronLeft className="text-lila" size={28} />
         </button>
-        <h1 className="text-2xl font-semibold text-lila flex-grow text-center mr-6">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold text-lila flex-grow text-center mr-6">
           Payment Methods
         </h1>
       </header>
-      <div className="bg-vanilla rounded-3xl p-8 w-full max-w-md">
-        <div className="bg-white rounded-lg shadow-md p-4">
+      <div className="bg-vanilla rounded-3xl p-4 sm:p-8 w-full max-w-md lg:max-w-lg xl:max-w-xl">
+        <div className="bg-white rounded-lg shadow-md p-3 sm:p-4">
           {savedCards.length > 0 && (
             <div>
               {savedCards.map((card) => (
                 <div
                   key={card.id}
-                  className="flex items-center justify-between py-4 border-b border-gray-200"
+                  className="flex items-center justify-between py-3 sm:py-4 border-b border-gray-200"
                 >
                   <div className="flex items-center flex-grow">
-                    <FontAwesomeIcon icon={faCreditCard} className="text-lila mr-4" size="lg" />
-                    <span className="text-lg text-black">**** **** **** {card.cardNumber.slice(-4)}</span>
+                    <FontAwesomeIcon icon={faCreditCard} className="text-lila mr-3 sm:mr-4" size="lg" />
+                    <span className="text-sm sm:text-lg text-black">**** **** **** {card.cardNumber.slice(-4)}</span>
                   </div>
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3 sm:gap-4">
                     <button 
                       className="text-red-500 hover:text-red-700 transition-colors"
                       onClick={() => handleDeleteCard(card.id)}
@@ -120,7 +120,7 @@ export default function PaymentMethods() {
                       <FontAwesomeIcon icon={faTrash} size="lg" />
                     </button>
                     <button 
-                      className={`w-6 h-6 rounded-full border-2 ${card.selected ? 'bg-lila border-pink' : 'border-pink'}`}
+                      className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 ${card.selected ? 'bg-lila border-pink' : 'border-pink'}`}
                       onClick={() => handleSelection(card.id)}
                       aria-label={card.selected ? 'Deselect card' : 'Select card'}
                     ></button>
@@ -133,14 +133,14 @@ export default function PaymentMethods() {
           {paymentMethods.map((method) => (
             <div
               key={method.id}
-              className="flex items-center justify-between py-4 border-b border-gray-200 last:border-b-0"
+              className="flex items-center justify-between py-3 sm:py-4 border-b border-gray-200 last:border-b-0"
             >
               <div className="flex items-center">
-                <FontAwesomeIcon icon={method.icon} className="text-lila mr-4" size="lg" />
-                <span className="text-lg text-black">{method.label}</span>
+                <FontAwesomeIcon icon={method.icon} className="text-lila mr-3 sm:mr-4" size="lg" />
+                <span className="text-sm sm:text-lg text-black">{method.label}</span>
               </div>
               <button 
-                className={`w-6 h-6 rounded-full border-2 ${method.selected ? 'bg-lila border-pink' : 'border-pink'}`}
+                className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 ${method.selected ? 'bg-lila border-pink' : 'border-pink'}`}
                 onClick={() => handleSelection(method.id)}
                 aria-label={method.selected ? 'Deselect payment method' : 'Select payment method'}
               ></button>
@@ -149,7 +149,7 @@ export default function PaymentMethods() {
         </div>
 
         <button 
-          className="mt-6 w-full bg-pink text-white py-3 rounded-full font-semibold"
+          className="mt-4 sm:mt-6 w-full bg-pink text-white py-2 sm:py-3 rounded-full font-semibold text-sm sm:text-base"
           onClick={() => navigate('/add-card')}
         >
           Add New Card
