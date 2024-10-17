@@ -41,8 +41,8 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto flex flex-col items-center">
           <h1 className="text-2xl sm:text-4xl font-bold text-[#e57e60] mb-4 mt-4 text-center">Spoon It If You Like It</h1>
           <div className="w-full flex flex-col sm:flex-row items-center justify-between">
-            <div className="w-full sm:w-1/3 order-2 sm:order-1 mb-4 sm:mb-0"></div> {/* Spacer on desktop */}
-            <div className="w-full sm:w-1/3 order-1 sm:order-2 mb-4 sm:mb-0 flex justify-center"> {/* Centered search */}
+            <div className="w-full sm:w-1/3 order-2 sm:order-1 mb-4 sm:mb-0"></div>
+            <div className="w-full sm:w-1/3 order-1 sm:order-2 mb-4 sm:mb-0 flex justify-center">
               <div className="relative max-w-md w-full">
                 <input
                   type="text"
@@ -54,7 +54,7 @@ export default function Navbar() {
                 </button>
               </div>
             </div>
-            <div className="w-full sm:w-1/3 order-3 flex justify-center sm:justify-end"> {/* Right-aligned icons on desktop */}
+            <div className="w-full sm:w-1/3 order-3 flex justify-center sm:justify-end">
               <div className="flex items-center space-x-4">
                 <button className="text-burnt" onClick={() => window.location.href = '/favorites'}>
                   <Heart className="h-10 w-10 bg-white p-2 rounded-lg" />
