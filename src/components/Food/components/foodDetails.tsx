@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { ChevronLeft, Heart, Minus, Plus, ShoppingCart, Star, Dot } from 'lucide-react'
+import { ChevronLeft, Minus, Plus, ShoppingCart, Star, Dot } from 'lucide-react'
 
 interface Topping {
   name: string
@@ -21,13 +21,13 @@ interface Item {
 }
 
 interface CartItem {
-    id: number
-    name: string
-    price: number
-    quantity: number
-    toppings: Topping[] 
-    image: string 
-  }  
+  id: number
+  name: string
+  price: number
+  quantity: number
+  toppings: Topping[] 
+  image: string 
+}  
 
 const addToCart = (item: CartItem) => {
   const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
@@ -57,6 +57,28 @@ export default function FoodDetails() {
   const [isFavorite, setIsFavorite] = useState(false)
   const [toppings, setToppings] = useState(item.toppings)
 
+  useEffect(() => {
+    const storedFavorites = localStorage.getItem('favoriteFood');
+    if (storedFavorites) {
+      const favorites = JSON.parse(storedFavorites).map((favItem: Item) => favItem.id);
+      setIsFavorite(favorites.includes(item.id));
+    }
+  }, [item.id]);
+
+  const toggleFavorite = () => {
+    const storedFavorites = JSON.parse(localStorage.getItem('favoriteFood') || '[]');
+    let updatedFavorites;
+
+    if (isFavorite) {
+      updatedFavorites = storedFavorites.filter((favItem: Item) => favItem.id !== item.id);
+    } else {
+      updatedFavorites = [...storedFavorites, item];
+    }
+
+    localStorage.setItem('favoriteFood', JSON.stringify(updatedFavorites));
+    setIsFavorite(!isFavorite);
+  }
+
   const toggleTopping = (index: number) => {
     const newToppings = [...toppings]
     newToppings[index].selected = !newToppings[index].selected
@@ -81,8 +103,8 @@ export default function FoodDetails() {
               <h1 className="text-xl sm:text-2xl font-bold text-lila">{item.restaurantName}</h1>
             </button>
           </div>
-          <button onClick={() => setIsFavorite(!isFavorite)}>
-            <Heart size={20} fill={isFavorite ? 'purple' : 'none'} color={isFavorite ? 'purple' : 'black'} />
+          <button onClick={toggleFavorite} className="text-lg sm:text-xl">
+            {isFavorite ? '💜' : '🤍'}
           </button>
         </div>
 
