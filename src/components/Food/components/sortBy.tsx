@@ -208,7 +208,11 @@ export default function Sort() {
           {filteredAndSortedItems()
             .slice(0, itemsToShow)
             .map((item) => (
-              <div key={item.id} className="bg-white rounded-3xl shadow-lg overflow-hidden">
+              <button 
+                key={item.id} 
+                className="bg-white rounded-3xl shadow-lg overflow-hidden w-full text-left" 
+                onClick={() => handleItemClick(item)}
+              >
                 <div className="relative">
                   <img src={item.image} alt={item.name} className="h-64 w-full object-cover" />
                   <div className="bg-white bg-opacity-100 rounded-full p-1 px-2 flex items-center absolute top-2 left-2">
@@ -233,7 +237,7 @@ export default function Sort() {
                     Find Out More
                   </button>
                 </div>
-              </div>
+              </button>
             ))}
         </div>
         {itemsToShow < filteredAndSortedItems().length && (
