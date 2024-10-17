@@ -52,7 +52,7 @@ const createClusterIcon = (cluster: L.MarkerCluster): DivIcon => {
 
 const Map: React.FC = () => {
   return (
-    <div className="w-full h-[500px]">
+    <div className="w-full h-[500px] relative z-10">
       <MapContainer center={[51.90243472687174, -8.481868689693755]} zoom={13} className="w-full h-full">
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

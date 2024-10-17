@@ -40,27 +40,32 @@ export default function Navbar() {
       <nav className="px-4 py-2">
         <div className="max-w-7xl mx-auto flex flex-col items-center">
           <h1 className="text-2xl sm:text-4xl font-bold text-[#e57e60] mb-4 mt-4 text-center">Spoon It If You Like It</h1>
-          <div className="w-full flex flex-col sm:flex-row justify-between items-center">
-            <div className="relative flex-grow max-w-md mx-auto w-full sm:w-auto mb-4 sm:mb-0"> 
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-full py-2 px-4 pr-10 rounded-full focus:outline-none focus:border-[#e57e60] text-burnt" 
-              />
-              <button className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#e57e60] text-white rounded-full p-1" onClick={() => window.location.href = '/restaurant'}>
-                🔍
-              </button>
+          <div className="w-full flex flex-col sm:flex-row items-center justify-between">
+            <div className="w-full sm:w-1/3 order-2 sm:order-1 mb-4 sm:mb-0"></div> {/* Spacer on desktop */}
+            <div className="w-full sm:w-1/3 order-1 sm:order-2 mb-4 sm:mb-0 flex justify-center"> {/* Centered search */}
+              <div className="relative max-w-md w-full">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="w-full py-2 px-4 pr-10 rounded-full focus:outline-none focus:border-[#e57e60] text-burnt"
+                />
+                <button className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#e57e60] text-white rounded-full p-1" onClick={() => window.location.href = '/restaurant'}>
+                  🔍
+                </button>
+              </div>
             </div>
-            <div className="flex items-center space-x-4 mt-4 sm:mt-0">
-              <button className="text-burnt" onClick={() => window.location.href = '/favorites'}>
-                <Heart className="h-10 w-10 bg-white p-2 rounded-lg" />
-              </button>
-              <button className="text-burnt" onClick={toggleCart}>
-                <ShoppingCart className="h-10 w-10 bg-white p-2 rounded-lg" />
-              </button>
-              <button className="text-burnt" onClick={toggleProfile}>
-                <User className="h-10 w-10 bg-white p-2 rounded-lg" />
-              </button>
+            <div className="w-full sm:w-1/3 order-3 flex justify-center sm:justify-end"> {/* Right-aligned icons on desktop */}
+              <div className="flex items-center space-x-4">
+                <button className="text-burnt" onClick={() => window.location.href = '/favorites'}>
+                  <Heart className="h-10 w-10 bg-white p-2 rounded-lg" />
+                </button>
+                <button className="text-burnt" onClick={toggleCart}>
+                  <ShoppingCart className="h-10 w-10 bg-white p-2 rounded-lg" />
+                </button>
+                <button className="text-burnt" onClick={toggleProfile}>
+                  <User className="h-10 w-10 bg-white p-2 rounded-lg" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
